@@ -13,6 +13,7 @@ module.exports = {
       screens:{
         'unline': {'raw': '(text-decoration: underline)'},
         'smm':{'min':'400px'},
+        'smx':{'min':'830px'},
       },
       
     },
