@@ -19,17 +19,18 @@ import {
   MenuItems,
   
 } from "@headlessui/react";
+import { Link } from "react-router-dom";
 
 const navigation = [
   {
     name: "About us",
-    href: "/",
+    href: "/aboutus=page",
     current: true,
     icon: <FontAwesomeIcon icon={faAddressCard} />,
   },
   {
     name: "Contact us",
-    href: "/",
+    href: "/contactus=page",
     current: false,
     icon: <FontAwesomeIcon icon={faEnvelope} />,
   },
@@ -86,9 +87,9 @@ const NavBar = () => {
             <div className="hidden smx:ml-6 smx:block">
               <div className="flex py-4  space-x-2">
                 {navigation.map((item) => (
-                  <a
+                  <Link
                     key={item.name}
-                    href={item.href}
+                    to={item.href}
                     aria-current={item.current ? "page" : undefined}
                     className={classNames(
                       item.current
@@ -98,23 +99,23 @@ const NavBar = () => {
                     )}
                   >
                     {item.icon} {item.name}
-                  </a>
+                  </Link>
                 ))}
               </div>
             </div>
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 smx:static smx:inset-auto smx:ml-6 smx:pr-0">
-          <input type="text " className="rounded-s-full "/>
+          <input type="text " className="rounded-s-full h-7 "/>
             <button
               type="button"
               className="relative w-10  rounded-e-full mt-1 "
             >
-              <FontAwesomeIcon icon={faMagnifyingGlass} className="bg-white p-1 rounded-e-full hover:bg-blue-400 w-10" />
+              <FontAwesomeIcon icon={faMagnifyingGlass} className="bg-white p-1 rounded-e-full hover:bg-blue-400 w-12 h-5" />
             </button>
 
             {/* Profile dropdown */}
-            <Menu as="div" className="relative ml-3">
-              <div>
+            <Menu as="div" className="relative ml-4 ">
+              <div className="ml-3">
                 <MenuButton className="relative flex rounded-full  bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                   <span className="absolute -inset-1.5" />
                   <span className="sr-only">Open user menu</span>
@@ -179,6 +180,7 @@ const NavBar = () => {
           ))}
         </div>
       </DisclosurePanel>
+      
     </Disclosure>
   );
 };

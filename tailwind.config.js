@@ -15,6 +15,9 @@ module.exports = {
         'smm':{'min':'400px'},
         'smx':{'min':'830px'},
       },
+      backgroundImage:{
+        'hero': "url('https://i.makeagif.com/media/8-22-2017/tFTl2R.gif')",
+      }
       
     },
   },
