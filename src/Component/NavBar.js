@@ -24,25 +24,25 @@ import { Link } from "react-router-dom";
 const navigation = [
   {
     name: "About us",
-    href: "/aboutus=page",
+    to: "/aboutus=page",
     current: true,
     icon: <FontAwesomeIcon icon={faAddressCard} />,
   },
   {
     name: "Contact us",
-    href: "/contactus=page",
+    to: "/contactus=page",
     current: false,
     icon: <FontAwesomeIcon icon={faEnvelope} />,
   },
   {
     name: "Login",
-    href: "/",
+    to: "/",
     current: false,
     icon: <FontAwesomeIcon icon={faRightToBracket} />,
   },
   {
     name: "Cart",
-    href: "/",
+   to: "/",
     current: false,
     icon: <FontAwesomeIcon icon={faCartShopping} />,
   },
@@ -89,7 +89,7 @@ const NavBar = () => {
                 {navigation.map((item) => (
                   <Link
                     key={item.name}
-                    to={item.href}
+                    to={item.to}
                     aria-current={item.current ? "page" : undefined}
                     className={classNames(
                       item.current

@@ -16,17 +16,18 @@ const AppLayout = createBrowserRouter(
                     path: "/",
                     element:<Body />,
                     children:[
-                        {
-                            path:"/aboutus=page",
-                            element:<AboutUs/>
-                        },
-                        {
-                            path:"/contactus=page",
-                            element:<ContactUs />
-                        },
+                        
 
                     ]
-                }
+                },
+                {
+                    path:"/aboutus=page",
+                    element:<AboutUs/>
+                },
+                {
+                    path:"/contactus=page",
+                    element:<ContactUs />
+                },
             ]
         }
     ]
