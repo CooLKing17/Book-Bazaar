@@ -1,4 +1,4 @@
-import { domAnimation, LazyMotion,motion, MotionConfig } from "framer-motion";
+
 import { useEffect, useState } from "react";
 
 const Info = [
@@ -68,27 +68,31 @@ const ScrollBar = () => {
 
   return (
     <>
-    <MotionConfig transition={{ duration: 1 }}>
+    
       {Info[currentIndex].title && (
-        <motion.div initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }} className={Info[currentIndex].cssDiv}>
+        <div className={Info[currentIndex].cssDiv}>
+       
           <div className="m-1 h-80 w-6/12 flex flex-col justify-center items-center">
+          
             <p className={Info[currentIndex].cssP}>
               {Info[currentIndex].title}
             </p>
             <p className="text-3xl mdx:text-2xl">
               {Info[currentIndex].content}
             </p>
+            
             {Info[currentIndex].btn && (
               <button className={Info[currentIndex].btncss}>
                 {Info[currentIndex].btn}
               </button>
             )}
+           
           </div>
+          
           <div className={Info[currentIndex].css1Div}></div>
-        </motion.div>
+        </div>
       )}
-      </MotionConfig>
+      
     </>
   );
 };

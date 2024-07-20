@@ -4,6 +4,7 @@ import Error404 from './Component/Error404';
 import Body from './Component/Body';
 import AboutUs from './Component/AboutUs';
 import ContactUs from './Component/ContactUs.js';
+import InfoPage from './Component/Utilites/InfoPage.js';
 
 const AppLayout = createBrowserRouter(
     [
@@ -28,6 +29,10 @@ const AppLayout = createBrowserRouter(
                     path:"/contactus=page",
                     element:<ContactUs />
                 },
+                {
+                    path:"/InfoPage",
+                    element:<InfoPage />
+                }
             ]
         }
     ]

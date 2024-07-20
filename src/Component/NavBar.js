@@ -7,7 +7,6 @@ import {
   faAddressCard,
   faEllipsisH,
   faTimes,
- 
 } from "@fortawesome/free-solid-svg-icons";
 import {
   Disclosure,
@@ -17,7 +16,6 @@ import {
   MenuButton,
   MenuItem,
   MenuItems,
-  
 } from "@headlessui/react";
 import { Link } from "react-router-dom";
 
@@ -42,7 +40,7 @@ const navigation = [
   },
   {
     name: "Cart",
-   to: "/",
+    to: "/",
     current: false,
     icon: <FontAwesomeIcon icon={faCartShopping} />,
   },
@@ -54,8 +52,11 @@ function classNames(...classes) {
 
 const NavBar = () => {
   return (
-    <Disclosure as="nav" className="bg-gray-800">
-      <div className="mx-auto max-w-7xl px-2 smx:px-6 lg:px-8">
+    <Disclosure
+      as="nav"
+      className="bg-gray-800 z-50  top-0 left-0 right-0  justify-between p-1 "
+    >
+      <div className="mx-auto max-w-7xl px-2 smx:px-6 lg:px-8 ">
         <div className="relative flex h-16 items-center justify-between">
           <div className="absolute inset-y-0 left-0 flex items-center smx:hidden">
             {/* Mobile menu button */}
@@ -76,12 +77,12 @@ const NavBar = () => {
           </div>
           <div className="flex flex-1 items-center justify-center smx:items-stretch smx:justify-start">
             <div className="flex flex-shrink-0 items-center">
-            <a href="/">
-              <img
-                alt="Your Company"
-                src="https://png.pngtree.com/png-vector/20221030/ourmid/pngtree-book-logo-template-vector-illustration-studying-sign-page-vector-png-image_39898376.png"
-                className="w-16 transition ease-in-out delay-150 hover:-translate-y-2 hover:scale-150 duration-500"
-              />
+              <a href="/">
+                <img
+                  alt="Your Company"
+                  src="https://png.pngtree.com/png-vector/20221030/ourmid/pngtree-book-logo-template-vector-illustration-studying-sign-page-vector-png-image_39898376.png"
+                  className="w-16 transition ease-in-out delay-150 hover:-translate-y-2 hover:scale-150 duration-500"
+                />
               </a>
             </div>
             <div className="hidden smx:ml-6 smx:block">
@@ -105,12 +106,15 @@ const NavBar = () => {
             </div>
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 smx:static smx:inset-auto smx:ml-6 smx:pr-0">
-          <input type="text " className="rounded-s-full h-7 "/>
+            <input type="text " className="rounded-s-full h-7  " />
             <button
               type="button"
               className="relative w-10  rounded-e-full mt-1 "
             >
-              <FontAwesomeIcon icon={faMagnifyingGlass} className="bg-white p-1 rounded-e-full hover:bg-blue-400 w-12 h-5" />
+              <FontAwesomeIcon
+                icon={faMagnifyingGlass}
+                className="bg-white p-1 rounded-e-full hover:bg-blue-400 w-12 h-5"
+              />
             </button>
 
             {/* Profile dropdown */}
@@ -119,11 +123,11 @@ const NavBar = () => {
                 <MenuButton className="relative flex rounded-full  bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                   <span className="absolute -inset-1.5" />
                   <span className="sr-only">Open user menu</span>
-                    <img
-                      alt=""
-                      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTSKbCFe_QYSVH-4FpaszXvakr2Eti9eAJpQ&s"
-                      className="h-10 w-10 rounded-full "
-                    />
+                  <img
+                    alt=""
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTSKbCFe_QYSVH-4FpaszXvakr2Eti9eAJpQ&s"
+                    className="h-10 w-10 rounded-full "
+                  />
                 </MenuButton>
               </div>
               <MenuItems
@@ -175,15 +179,13 @@ const NavBar = () => {
                 "block rounded-md px-3 py-2 text-base font-medium"
               )}
             >
-            {item.icon} {item.name}
+              {item.icon} {item.name}
             </DisclosureButton>
           ))}
         </div>
       </DisclosurePanel>
-      
     </Disclosure>
   );
 };
 
 export default NavBar;
-
