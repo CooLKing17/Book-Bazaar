@@ -1,14 +1,4 @@
 import React from 'react';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faMagnifyingGlass,
-  faCartShopping,
-  faRightToBracket,
-  faEnvelope,
-  faAddressCard,
-  faEllipsisH,
-  faTimes,
-} from "@fortawesome/free-solid-svg-icons";
 import {
   Disclosure,
   DisclosureButton,
@@ -22,29 +12,36 @@ import { Link } from "react-router-dom";
 
 const navigation = [
   {
-    name: "About us",
-    to: "/aboutus=page",
-    current: true,
-    icon: <FontAwesomeIcon icon={faAddressCard} />,
-  },
-  {
-    name: "Contact us",
-    to: "/contactus=page",
-    current: false,
-    icon: <FontAwesomeIcon icon={faEnvelope} />,
-  },
-  {
-    name: "Login",
+    name:"",
     to: "/",
     current: false,
-    icon: <FontAwesomeIcon icon={faRightToBracket} />,
+    icon: "https://cdn-icons-png.flaticon.com/128/11422/11422050.png",
+  },
+  {
+    name: "Donate your Book",
+    to: "/aboutus=page",
+    current: false,
+    icon:"https://cdn-icons-png.flaticon.com/128/10292/10292239.png",
+  },
+  {
+    name: "Sell your Book",
+    to: "/contactus=page",
+    current: false,
+    icon: "https://cdn-icons-png.flaticon.com/128/1992/1992622.png",
+  },
+  {
+    name: "Buy Now",
+    to: "/",
+    current: false,
+    icon: "https://cdn-icons-png.flaticon.com/128/3986/3986107.png",
   },
   {
     name: "Cart",
     to: "/",
     current: false,
-    icon: <FontAwesomeIcon icon={faCartShopping} />,
+    icon: "https://cdn-icons-png.flaticon.com/128/3145/3145827.png",
   },
+ 
 ];
 
 function classNames(...classes) {
@@ -55,7 +52,7 @@ const NavBar = () => {
   return (
     <Disclosure
       as="nav"
-      className="bg-gray-800 z-50 fixed top-0 left-0 right-0 justify-between p-1"
+      className="bg-gray-400 z-50 fixed top-0 left-0 right-0 justify-between p-1"
     >
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div className="relative flex h-16 items-center justify-between">
@@ -64,28 +61,20 @@ const NavBar = () => {
             <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
               <span className="absolute -inset-0.5" />
               <span className="sr-only">Open main menu</span>
-              <FontAwesomeIcon
-                icon={faEllipsisH}
+              <img alt='more'
+                src="https://cdn-icons-png.flaticon.com/128/14849/14849048.png"
                 aria-hidden="true"
                 className="block h-6 w-6 group-data-[open]:hidden"
               />
-              <FontAwesomeIcon
-                icon={faTimes}
+              <img alt='cancel'
+                src="https://cdn-icons-png.flaticon.com/128/16083/16083469.png"
                 aria-hidden="true"
                 className="hidden h-6 w-6 group-data-[open]:block"
               />
             </DisclosureButton>
           </div>
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-            <div className="flex flex-shrink-0 items-center">
-              <a href="/">
-                <img
-                  alt="Your Company"
-                  src="https://png.pngtree.com/png-vector/20221030/ourmid/pngtree-book-logo-template-vector-illustration-studying-sign-page-vector-png-image_39898376.png"
-                  className="w-16 transition ease-in-out delay-150 hover:-translate-y-2 hover:scale-150 duration-500"
-                />
-              </a>
-            </div>
+           
             <div className="hidden sm:ml-6 sm:block">
               <div className="flex py-4 space-x-2">
                 {navigation.map((item) => (
@@ -95,26 +84,25 @@ const NavBar = () => {
                     aria-current={item.current ? "page" : undefined}
                     className={classNames(
                       item.current
-                        ? "bg-gray-900 text-white hover:bg-neutral-100 hover:text-red-500"
-                        : "text-gray-300 hover:bg-neutral-100 hover:text-red-500",
-                      "rounded-md px-3 py-2 text-sm font-medium"
+                        ? "bg-gray-300 text-white hover:bg-neutral-100 hover:text-red-500"
+                        : "text-white hover:bg-gray-50 hover:text-red-500",
+                      "rounded-md px-3 py-2 text-sm font-medium flex items-center"
                     )}
                   >
-                    {item.icon} {item.name}
+                    <img className="w-9 pr-1 "alt="icon" src={item.icon}/> {item.name}
                   </Link>
                 ))}
               </div>
             </div>
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-            <input type="text" className="rounded-s-full h-7" />
+            <input type="text" className="rounded-s-full w-60 h-9 smx:w-40 smx:h-6" />
             <button
               type="button"
-              className="relative w-10 rounded-e-full mt-1"
+              className="relative w-14 rounded-e-full smx:w-10 "
             >
-              <FontAwesomeIcon
-                icon={faMagnifyingGlass}
-                className="bg-white p-1 rounded-e-full hover:bg-blue-400 w-12 h-5"
+             <img alt="Search" src="https://cdn-icons-png.flaticon.com/128/6983/6983319.png"
+                className="bg-white  rounded-e-full hover:bg-blue-400 w-14 p-1 h-9 smx:w-10 smx:h-6"
               />
             </button>
 
@@ -126,7 +114,7 @@ const NavBar = () => {
                   <span className="sr-only">Open user menu</span>
                   <img
                     alt=""
-                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTSKbCFe_QYSVH-4FpaszXvakr2Eti9eAJpQ&s"
+                    src="https://cdn-icons-png.flaticon.com/128/1177/1177568.png"
                     className="h-10 w-10 rounded-full"
                   />
                 </MenuButton>
@@ -168,20 +156,20 @@ const NavBar = () => {
       <DisclosurePanel className="sm:hidden">
         <div className="space-y-1 px-2 pb-3 pt-2">
           {navigation.map((item) => (
-            <DisclosureButton
+            <Link
               key={item.name}
               as="a"
-              href={item.href}
+              to={item.to}
               aria-current={item.current ? "page" : undefined}
               className={classNames(
                 item.current
-                  ? "bg-gray-900 text-white"
-                  : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                "block rounded-md px-3 py-2 text-base font-medium"
+                  ? "bg-gray-300 text-white"
+                  : "text-white hover:bg-gray-50 hover:text-red-500",
+                " rounded-md px-3 py-2 text-base font-medium flex items-center"
               )}
             >
-              {item.icon} {item.name}
-            </DisclosureButton>
+             <img className="w-9 pr-1 "alt="icon" src={item.icon}/> {item.name}
+            </Link>
           ))}
         </div>
       </DisclosurePanel>

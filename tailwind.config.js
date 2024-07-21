@@ -13,8 +13,8 @@ module.exports = {
       },
       screens:{
         'unline': {'raw': '(text-decoration: underline)'},
-        'smm':{'min':'400px'},
-        'smx':{'min':'830px'},
+        'sm':{'min':'875px'},
+        'smx':{'min':'375px'},
         'mdx':{'max':'550px'},
         'mdy':{'max':'1100px'},
 

@@ -46,7 +46,7 @@ const AboutUs = () => {
 
   return (
     <div className="flex">
-      <div className="flex">
+      <div className="flex mdy:hidden">
         <img alt="img" src="https://img.freepik.com/premium-vector/confident-businessman-coach-wearing-glasses-looking-camera-talking_108231-755.jpg" />
       </div>
       <div className=" p-6 pt-24 mt-12 max-w-4xl mx-auto">

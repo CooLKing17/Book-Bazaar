@@ -18,7 +18,7 @@ const BookList = ({ list }) => {
           }}
           className="border-4 border-black font-serif w-60 text-center p-1 rounded-xl m-2 flex-shrink-0"
         >
-          <div className="border-2  border-red-500  flex justify-center items-center">
+          <div className=" flex justify-center items-center">
             <img
               alt="img"
               src={book.bookImages[0]} // Using the first image from bookImages array
