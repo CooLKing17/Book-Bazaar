@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 const BookList = ({ list }) => {
   console.log(list);
   return (
-    <div  className="flex flex-nowrap overflow-x-auto overflow-hidden cursor-pointer p-2 hide-scrollbar">
+    <>
       {list.map((book) => (
-        <Link to="/InfoPage" >
+        <Link to="/InfoPage" className="m-2 h-full w-60">
         <motion.div whileHover={{ scale: 0.8 }} whileTap={{ scale: 0.7 }}
           key={book.bookName} // Assuming bookName is unique, else use a unique identifier
           initial={{ opacity: 0, scale: 0.5 }}
@@ -16,7 +16,7 @@ const BookList = ({ list }) => {
             delay: 0.5,
             ease: [0, 0.71, 0.2, 1.01],
           }}
-          className="border-4 border-black font-serif w-60 text-center p-1 rounded-xl m-2 flex-shrink-0"
+          className="border-2 border-green-500 font-serif  w-60 h-full  text-center p-1 rounded-xl m-1 flex-shrink-0"
         >
           <div className=" flex justify-center items-center">
             <img
@@ -30,14 +30,14 @@ const BookList = ({ list }) => {
             <p>{book.authorName}</p>
             <p>{book.bookPrice}</p>
             <p>{book.bookRating}</p>
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2">
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2 ">
               Add to Cart
             </button>
           </div>
         </motion.div>
         </Link>
       ))}
-    </div>
+    </>
   );
 };
 

@@ -5,6 +5,7 @@ import Body from './Component/Body';
 import AboutUs from './Component/AboutUs';
 import ContactUs from './Component/ContactUs.js';
 import InfoPage from './Component/Utilites/InfoPage.js';
+import CataBookList from './Component/Utilites/CataBookList.js';
 
 const AppLayout = createBrowserRouter(
     [
@@ -32,7 +33,12 @@ const AppLayout = createBrowserRouter(
                 {
                     path:"/InfoPage",
                     element:<InfoPage />
+                },
+                {
+                    path:"/catalist",
+                    element:<CataBookList />
                 }
+
             ]
         }
     ]

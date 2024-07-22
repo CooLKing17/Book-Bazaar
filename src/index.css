@@ -11,4 +11,13 @@
   .hide-scrollbar::-webkit-scrollbar {
     display: none; /* For Chrome, Safari, and Opera */
   }
+
+  .hide-verticalscrollbar {
+    overflow-y: auto; 
+    scrollbar-width: none; /* For Firefox */
+  }
+  
+  .hide-verticalscrollbar::-webkit-scrollbar {
+    display: none; /* For Chrome, Safari, and other WebKit browsers */
+  }
   

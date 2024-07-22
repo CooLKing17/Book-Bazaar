@@ -2,8 +2,7 @@ import { Link } from "react-router-dom";
 import BookList from "./Utilites/BookList";
 import ScrollBar from "./Utilites/ScrollBar";
 import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAnglesRight } from '@fortawesome/free-solid-svg-icons';
+import SimmerEff from "./Utilites/SimmerEff";
 // import InfoPage from "./Utilites/InfoPage";
 
 const list = {
@@ -219,25 +218,33 @@ const list = {
 };
 
 const Body = () => {
-  console.log(list);
+  const isLoading = false; // Add a state or prop to manage loading state
 
   return (
-    <>
-      <div className="mt-20 px-4">
-        <ScrollBar />
-        {Object.entries(list).map(([category, books]) => (
-          <div className="border-2 border-gray-300 m-2 rounded-lg bg-gray-50 shadow-lg" key={category}>
-            <h1 className="m-1 justify-center items-center text-center font-serif text-3xl font-bold rounded-full p-1 bg-green-500 text-white">{category.charAt(0).toUpperCase() + category.slice(1)}</h1>
+    <div className="mt-20 px-4">
+      <ScrollBar />
+      {isLoading ? (
+      <div className="flex flex-nowrap overflow-x-auto overflow-hidden cursor-pointer m-2 hide-scrollbar">
+        <SimmerEff />
+        </div>
+      ) : (
+        Object.entries(list).map(([category, books]) => (
+          <div className="border-2 border-gray-300 m-1 rounded-lg bg-gray-50 shadow-lg" key={category}>
+            <h1 className="m-1 justify-center items-center text-center font-serif text-3xl font-bold rounded-full p-1 bg-green-500 text-white">
+              {category.charAt(0).toUpperCase() + category.slice(1)}
+            </h1>
+            <div className="flex flex-nowrap overflow-x-auto overflow-hidden cursor-pointer p-1 hide-scrollbar">
             <BookList list={books} />
-            <Link to="/" className="flex mr-2 mb-1 justify-end items-end font-bold text-blue-600 hover:text-red-600 hover:underline">
-              More <FontAwesomeIcon icon={faAnglesRight} />
+            </div>
+            <Link to="/catalist" className="flex mr-4 mb-2 justify-end items-end font-bold text-blue-600 hover:text-red-600 hover:underline">
+              <img alt="more" src="https://cdn-icons-png.flaticon.com/128/14612/14612021.png" className="w-10"/>
             </Link>
           </div>
-        ))}
-        {/* <InfoPage /> */}
-      </div>
-    </>
+        ))
+      )}
+    </div>
   );
-}
+};
 
 export default Body;
+

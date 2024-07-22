@@ -4,12 +4,12 @@ import Footer from "./Component/Footer.js"
 import './index.css'
 function App() {
   return (
-    <>
+    <div className="hide-verticalscrollbar">
       <NavBar />
       <Outlet />
       <Footer />
     
-    </>
+    </div>
   );
 }
 
