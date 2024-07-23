@@ -3,6 +3,7 @@ import BookList from "./Utilites/BookList";
 import ScrollBar from "./Utilites/ScrollBar";
 import React from "react";
 import SimmerEff from "./Utilites/SimmerEff";
+
 // import InfoPage from "./Utilites/InfoPage";
 
 const list = {
@@ -223,6 +224,7 @@ const Body = () => {
   return (
     <div className="mt-20 px-4">
       <ScrollBar />
+      
       {isLoading ? (
       <div className="flex flex-nowrap overflow-x-auto overflow-hidden cursor-pointer m-2 hide-scrollbar">
         <SimmerEff />

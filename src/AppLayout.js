@@ -6,6 +6,7 @@ import AboutUs from './Component/AboutUs';
 import ContactUs from './Component/ContactUs.js';
 import InfoPage from './Component/Utilites/InfoPage.js';
 import CataBookList from './Component/Utilites/CataBookList.js';
+import Cart from './Component/Utilites/Cart.js';
 
 const AppLayout = createBrowserRouter(
     [
@@ -37,6 +38,10 @@ const AppLayout = createBrowserRouter(
                 {
                     path:"/catalist",
                     element:<CataBookList />
+                },
+                {
+                    path:"/cart",
+                    element:<Cart />
                 }
 
             ]

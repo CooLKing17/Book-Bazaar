@@ -6,7 +6,7 @@ const BookList = ({ list }) => {
   return (
     <>
       {list.map((book) => (
-        <Link to="/InfoPage" className="m-2 h-full w-60">
+        <Link to="/InfoPage" className="m-2  w-60">
         <motion.div whileHover={{ scale: 0.8 }} whileTap={{ scale: 0.7 }}
           key={book.bookName} // Assuming bookName is unique, else use a unique identifier
           initial={{ opacity: 0, scale: 0.5 }}
@@ -28,6 +28,7 @@ const BookList = ({ list }) => {
           <div className="p-2 text-center">
             <h1 className="font-bold">{book.bookName}</h1>
             <p>{book.authorName}</p>
+            <p>Language</p>
             <p>{book.bookPrice}</p>
             <p>{book.bookRating}</p>
             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2 ">

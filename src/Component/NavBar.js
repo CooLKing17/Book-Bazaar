@@ -47,7 +47,7 @@ const navigation = [
   },
   {
     name: "Cart",
-    to: "/",
+    to: "/cart",
     current: false,
     icon: "https://cdn-icons-png.flaticon.com/128/3145/3145827.png",
   },
