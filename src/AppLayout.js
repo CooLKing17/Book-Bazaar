@@ -7,6 +7,8 @@ import ContactUs from './Component/ContactUs.js';
 import InfoPage from './Component/Utilites/InfoPage.js';
 import CataBookList from './Component/Utilites/CataBookList.js';
 import Cart from './Component/Utilites/Cart.js';
+import Sell from './Component/Utilites/Sell.js';
+import Donate from './Component/Utilites/Donte.js';
 
 const AppLayout = createBrowserRouter(
     [
@@ -40,8 +42,16 @@ const AppLayout = createBrowserRouter(
                     element:<CataBookList />
                 },
                 {
-                    path:"/cart",
+                    path:"/cart=page",
                     element:<Cart />
+                },
+                {
+                    path:"/sell=page",
+                    element:<Sell />
+                },
+                {
+                    path:"/donate=page",
+                    element:<Donate />
                 }
 
             ]

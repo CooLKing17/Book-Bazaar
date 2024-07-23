@@ -19,13 +19,13 @@ const navigation = [
   },
   {
     name: "Donate your Book",
-    to: "/aboutus=page",
+    to: "/donate=page",
     current: false,
     icon: "https://cdn-icons-png.flaticon.com/128/10292/10292239.png",
   },
   {
     name: "Sell your Book",
-    to: "/contactus=page",
+    to: "/sell=page",
     current: false,
     icon: "https://cdn-icons-png.flaticon.com/128/1992/1992622.png",
   },
@@ -47,7 +47,7 @@ const navigation = [
   },
   {
     name: "Cart",
-    to: "/cart",
+    to: "/cart=page",
     current: false,
     icon: "https://cdn-icons-png.flaticon.com/128/3145/3145827.png",
   },
@@ -61,7 +61,7 @@ const NavBar = () => {
   return (
     <Disclosure
       as="nav"
-      className="bg-gray-400 z-50 fixed top-0 left-0 right-0 justify-between  p-1"
+      className="bg-gray-400 z-50 fixed top-0 left-0 right-0 justify-between  p-2"
     >
       {({ open }) => (
         <>
