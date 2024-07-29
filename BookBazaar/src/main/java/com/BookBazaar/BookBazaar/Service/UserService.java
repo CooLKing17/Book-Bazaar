@@ -1,8 +1,15 @@
 package com.BookBazaar.BookBazaar.Service;
 
-import com.BookBazaar.BookBazaar.Entity.UserInfo;
+
+
+//import org.springframework.stereotype.Service;
+
+import com.BookBazaar.BookBazaar.Entity.User;
+
 
 public interface UserService {
-    
-    public void saveUserdata(UserInfo userinfo);
+	
+	public User Add(User user);
+	
+
 }

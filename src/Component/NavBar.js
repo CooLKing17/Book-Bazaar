@@ -58,6 +58,8 @@ function classNames(...classes) {
 }
 
 const NavBar = () => {
+
+  
   return (
     <Disclosure
       as="nav"
@@ -204,6 +206,15 @@ const NavBar = () => {
                         Donate Book Details
                       </Link>
                     </MenuItem>
+                     {  "1" ?
+                    <MenuItem>
+                      <Link
+                        to="/signin=signup"
+                        className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+                      >
+                        Sign in
+                      </Link>
+                    </MenuItem>:
                     <MenuItem>
                       <a
                         href="/"
@@ -212,6 +223,7 @@ const NavBar = () => {
                         Sign out
                       </a>
                     </MenuItem>
+                  }
                   </MenuItems>
                 </Menu>
               </div>

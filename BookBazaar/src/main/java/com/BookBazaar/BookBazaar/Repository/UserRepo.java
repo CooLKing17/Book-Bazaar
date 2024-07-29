@@ -1,11 +1,18 @@
 package com.BookBazaar.BookBazaar.Repository;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+//import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+//import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
-import com.BookBazaar.BookBazaar.Entity.UserInfo;
+import com.BookBazaar.BookBazaar.Entity.User;
 
-public interface UserRepo extends CrudRepository<UserInfo , String >{
+//import jakarta.persistence.criteria.CriteriaBuilder.In;
+@EnableJpaRepositories
 
-    public UserInfo findByEmail(String email);
+@Repository
+public interface UserRepo extends JpaRepository<User, Integer>{
+	
+	
 }
-    

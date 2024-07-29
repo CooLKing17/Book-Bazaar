@@ -11,6 +11,7 @@ import Sell from './Component/Utilites/Sell.js';
 import Donate from './Component/Utilites/Donte.js';
 import Profile from './Component/Utilites/Profile.js';
 import DonateSell from './Component/Utilites/DonateSellBook.js';
+import SignIn from './Component/Utilites/SignIn.js';
 
 const AppLayout = createBrowserRouter(
     [
@@ -62,6 +63,10 @@ const AppLayout = createBrowserRouter(
                 {
                     path:"/donatesell=page",
                     element:<DonateSell />
+                },
+                {
+                    path:"/signin=signup",
+                    element:<SignIn />
                 }
                 
 
