@@ -21,7 +21,7 @@ export const userUpload = async (data) => {
 export const LoginVerification=async(data)=>{
   console.log("Verifying login:", data);
   try {
-    const response = await axios.post(`${server}/LoginVerification`, data);
+    const response = await axios.post(`${server}/login`, data);
     console.log("Verification successful:", response.data);
     return response.data;
   } catch (error) {

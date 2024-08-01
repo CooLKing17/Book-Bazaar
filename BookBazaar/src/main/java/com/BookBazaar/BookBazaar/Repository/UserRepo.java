@@ -1,5 +1,7 @@
 package com.BookBazaar.BookBazaar.Repository;
 
+
+
 import org.springframework.data.jpa.repository.JpaRepository;
 //import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -13,6 +15,9 @@ import com.BookBazaar.BookBazaar.Entity.User;
 
 @Repository
 public interface UserRepo extends JpaRepository<User, Integer>{
+
+	User findByEmail(String email);
+
 	
 	
 }
