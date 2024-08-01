@@ -18,5 +18,6 @@ public interface UserService {
 	
 	public Response LoginCheck (Login login);
 	
+	public User GetProfile (String id);
 
 }

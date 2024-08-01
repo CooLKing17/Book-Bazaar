@@ -51,4 +51,15 @@ public class UserServiceImpl implements UserService {
 		    }
 		}
 
+		
+		@Override
+		public User GetProfile (String id) {
+			System.out.println(id);
+			User data = userrepo.findByEmail(id);
+			
+			System.out.println(data);
+			
+			return data;
+			
+		}
 }

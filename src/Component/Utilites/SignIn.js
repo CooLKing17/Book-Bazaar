@@ -1,11 +1,16 @@
-import { useState } from 'react';
-import { LoginVerification, userUpload } from '../Logic and Connection/Logic';
+import { useState } from "react";
+import { getProfile, LoginVerification, userUpload } from "../Logic and Connection/Logic";
+import { useDispatch } from "react-redux";
+import { setProfileData } from "../Store/Profilecart";
 
 const SignIn = () => {
   const [isSignIn, setIsSignIn] = useState(true);
 
-  const [user, setUser] = useState({
 
+
+  const dispatch = useDispatch()
+
+  const [user, setUser] = useState({
     fullname: "",
     email: "",
     gender: "",
@@ -19,46 +24,70 @@ const SignIn = () => {
     // profileimage: "",
     password: "",
     confirmpassword: "",
-    
   });
 
-  const [loginUser,setLoginUser]=useState({
-
+  const [loginUser, setLoginUser] = useState({
     email: "",
     password: "",
-  })
+  });
 
-  const handleData =(e)=>{
-
+  const handleData = (e) => {
     const name = e.target.name;
     const value = e.target.value;
 
-    setUser({...user ,[name]:value})
-  }
+    setUser({ ...user, [name]: value });
+  };
 
-  const handleSubmit=(e)=>{
+  const handleSubmit = async(e) => {
+    e.preventDefault();
+    if (
+      user.fullname &&
+      user.email &&
+      user.mobileno &&
+      user.address &&
+      user.pincode
+    ) {
+      if (user.password.toLowerCase() !== user.confirmpassword.toLowerCase()) {
+        console.log("password not matched");
+      } else {
+        const data = await userUpload(user);
+        
+        if(data){
+          console.log("success" , data);
+          dispatch(setProfileData(data));
+        }
+        else{
+          console.log("failed");
+        }
+      }
+    } else {
+      console.log("something is missing");
+    }
+  };
 
+
+
+  const handleLogin =async (e) => {
     e.preventDefault();
 
-    userUpload(user)
-    console.log("success")
-    
-  }
-
-  const handleLogin=(e)=>{
-
-    e.preventDefault();
-
-    if(loginUser.email && loginUser.password)
-    {
-      LoginVerification(loginUser)
+    if (loginUser.email && loginUser.password) {
+      const data=await LoginVerification(loginUser);
+      console.log(data)
+      if(data.status){
+       const info =await getProfile(loginUser)
+       console.log(info);
+       if(info){
+        dispatch(setProfileData(info))
+       }
+       else{
+        console.log("data not comming")
+       }
+      }
+    } else {
+      prompt("Sorry");
+      setIsSignIn();
     }
-    else
-    {prompt("Sorry")
-      setIsSignIn()
-    }
-
-  }
+  };
 
   return (
     <>
@@ -79,7 +108,10 @@ const SignIn = () => {
             <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-sm">
               <form className="space-y-6">
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-900">
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-medium text-gray-900"
+                  >
                     Email address
                   </label>
                   <div className="mt-2">
@@ -87,7 +119,12 @@ const SignIn = () => {
                       id="email"
                       name="email"
                       value={loginUser.email}
-                      onChange={(e)=>{setLoginUser({...loginUser,[e.target.name]:e.target.value})}}
+                      onChange={(e) => {
+                        setLoginUser({
+                          ...loginUser,
+                          [e.target.name]: e.target.value,
+                        });
+                      }}
                       type="email"
                       required
                       autoComplete="email"
@@ -97,11 +134,17 @@ const SignIn = () => {
                 </div>
                 <div>
                   <div className="flex items-center justify-between">
-                    <label htmlFor="password" className="block text-sm font-medium text-gray-900">
+                    <label
+                      htmlFor="password"
+                      className="block text-sm font-medium text-gray-900"
+                    >
                       Password
                     </label>
                     <div className="text-sm">
-                      <a href="/" className="font-semibold text-indigo-600 hover:text-indigo-500">
+                      <a
+                        href="/"
+                        className="font-semibold text-indigo-600 hover:text-indigo-500"
+                      >
                         Forgot password?
                       </a>
                     </div>
@@ -111,7 +154,12 @@ const SignIn = () => {
                       id="password"
                       name="password"
                       value={loginUser.password}
-                      onChange={(e)=>{setLoginUser({...loginUser,[e.target.name]:e.target.value})}}
+                      onChange={(e) => {
+                        setLoginUser({
+                          ...loginUser,
+                          [e.target.name]: e.target.value,
+                        });
+                      }}
                       type="password"
                       required
                       autoComplete="current-password"
@@ -131,7 +179,10 @@ const SignIn = () => {
               </form>
               <p className="mt-6 text-center text-sm text-gray-600">
                 Not a member?{" "}
-                <button onClick={() => setIsSignIn(false)} className="font-semibold text-indigo-600 hover:text-indigo-500">
+                <button
+                  onClick={() => setIsSignIn(false)}
+                  className="font-semibold text-indigo-600 hover:text-indigo-500"
+                >
                   Sign Up
                 </button>
               </p>
@@ -148,15 +199,20 @@ const SignIn = () => {
               </h2>
               <p className="mt-2 text-center text-sm text-gray-600">
                 Or{" "}
-                <button onClick={() => setIsSignIn(true)} className="font-medium text-blue-600 hover:text-blue-500">
+                <button
+                  onClick={() => setIsSignIn(true)}
+                  className="font-medium text-blue-600 hover:text-blue-500"
+                >
                   log in to your account
                 </button>
               </p>
             </div>
-            <form method='post' className="mt-8 space-y-6">
+            <form method="post" className="mt-8 space-y-6">
               <div className="space-y-4">
                 <div>
-                  <label htmlFor="full-name" className="sr-only">Full Name</label>
+                  <label htmlFor="full-name" className="sr-only">
+                    Full Name
+                  </label>
                   <input
                     id="fullname"
                     name="fullname"
@@ -170,7 +226,9 @@ const SignIn = () => {
                   />
                 </div>
                 <div>
-                  <label htmlFor="email-address" className="sr-only">Email address</label>
+                  <label htmlFor="email-address" className="sr-only">
+                    Email address
+                  </label>
                   <input
                     id="email-address"
                     name="email"
@@ -184,7 +242,9 @@ const SignIn = () => {
                   />
                 </div>
                 <div>
-                  <label htmlFor="dob" className="sr-only">Date of Birth</label>
+                  <label htmlFor="dob" className="sr-only">
+                    Date of Birth
+                  </label>
                   <input
                     id="dob"
                     name="dob"
@@ -198,7 +258,9 @@ const SignIn = () => {
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="block text-sm font-medium text-gray-900">Gender</label>
+                  <label className="block text-sm font-medium text-gray-900">
+                    Gender
+                  </label>
                   <div className="flex items-center space-x-4">
                     <div>
                       <input
@@ -210,7 +272,9 @@ const SignIn = () => {
                         value="male"
                         className="focus:ring-indigo-500 focus:border-indigo-500 text-indigo-600 border-gray-300"
                       />
-                      <label htmlFor="male" className="ml-2">Male</label>
+                      <label htmlFor="male" className="ml-2">
+                        Male
+                      </label>
                     </div>
                     <div>
                       <input
@@ -222,12 +286,30 @@ const SignIn = () => {
                         required
                         className="focus:ring-indigo-500 focus:border-indigo-500 text-indigo-600 border-gray-300"
                       />
-                      <label htmlFor="female" className="ml-2">Female</label>
+                      <label htmlFor="female" className="ml-2">
+                        Female
+                      </label>
+                    </div>
+                    <div>
+                      <input
+                        type="radio"
+                        id="transgender"
+                        name="gender"
+                        value="transgender"
+                        onChange={handleData}
+                        required
+                        className="focus:ring-indigo-500 focus:border-indigo-500 text-indigo-600 border-gray-300"
+                      />
+                      <label htmlFor="female" className="ml-2">
+                      Transgender
+                      </label>
                     </div>
                   </div>
                 </div>
                 <div>
-                  <label htmlFor="mobile-number" className="sr-only">Mobile No</label>
+                  <label htmlFor="mobile-number" className="sr-only">
+                    Mobile No
+                  </label>
                   <input
                     id="mobile-number"
                     name="mobileno"
@@ -241,7 +323,9 @@ const SignIn = () => {
                   />
                 </div>
                 <div>
-                  <label htmlFor="alternate-mobile-number" className="sr-only">Alternate Mobile No</label>
+                  <label htmlFor="alternate-mobile-number" className="sr-only">
+                    Alternate Mobile No
+                  </label>
                   <input
                     id="alternate-mobile-number"
                     name="alternatemobileno"
@@ -253,7 +337,9 @@ const SignIn = () => {
                   />
                 </div>
                 <div>
-                  <label htmlFor="pincode" className="sr-only">Occupation</label>
+                  <label htmlFor="pincode" className="sr-only">
+                    Occupation
+                  </label>
                   <input
                     id="occupation"
                     name="occupation"
@@ -266,9 +352,11 @@ const SignIn = () => {
                     placeholder="occupation"
                   />
                 </div>
-                
+
                 <div>
-                  <label htmlFor="address" className="sr-only">Address</label>
+                  <label htmlFor="address" className="sr-only">
+                    Address
+                  </label>
                   <textarea
                     id="address"
                     name="address"
@@ -283,7 +371,9 @@ const SignIn = () => {
                   ></textarea>
                 </div>
                 <div>
-                  <label htmlFor="pincode" className="sr-only">Pin Code</label>
+                  <label htmlFor="pincode" className="sr-only">
+                    Pin Code
+                  </label>
                   <input
                     id="pincode"
                     name="pincode"
@@ -296,9 +386,11 @@ const SignIn = () => {
                     placeholder="Pincode"
                   />
                 </div>
-               
+
                 <div>
-                  <label htmlFor="state" className="sr-only">State</label>
+                  <label htmlFor="state" className="sr-only">
+                    State
+                  </label>
                   <input
                     id="state"
                     name="state"
@@ -312,7 +404,9 @@ const SignIn = () => {
                   />
                 </div>
                 <div>
-                  <label htmlFor="password" className="sr-only">Password</label>
+                  <label htmlFor="password" className="sr-only">
+                    Password
+                  </label>
                   <input
                     id="password"
                     name="password"
@@ -326,7 +420,9 @@ const SignIn = () => {
                   />
                 </div>
                 <div>
-                  <label htmlFor="confirm-password" className="sr-only">Confirm Password</label>
+                  <label htmlFor="confirm-password" className="sr-only">
+                    Confirm Password
+                  </label>
                   <input
                     id="confirmpassword"
                     name="confirmpassword"
@@ -340,7 +436,10 @@ const SignIn = () => {
                   />
                 </div>
                 <div>
-                  <label htmlFor="upload-image" className="block text-sm font-medium text-gray-700">
+                  <label
+                    htmlFor="upload-image"
+                    className="block text-sm font-medium text-gray-700"
+                  >
                     Upload Image
                   </label>
                   <input
@@ -371,7 +470,10 @@ const SignIn = () => {
                     className="ml-2 block text-sm text-gray-900"
                   >
                     I agree to the{" "}
-                    <a href="/" className="font-medium text-indigo-600 hover:text-indigo-500">
+                    <a
+                      href="/"
+                      className="font-medium text-indigo-600 hover:text-indigo-500"
+                    >
                       terms and conditions
                     </a>
                   </label>

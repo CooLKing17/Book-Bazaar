@@ -1,9 +1,13 @@
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [isChangingPassword, setIsChangingPassword] = useState(false);
   const [isDeletingAccount, setIsDeletingAccount] = useState(false);
+
+  const profileCart =useSelector(store=>store.profile.profileData)
+  console.log(profileCart)
   const [formData, setFormData] = useState({
     fullName: "Avinash Nalawade",
     email: "Avinashnalawade65@gmail.com",
@@ -77,37 +81,39 @@ const Profile = () => {
               <input
                 id="fullName"
                 type="text"
-                value={formData.fullName}
+                value={profileCart.fullname}
                 readOnly={!isEditing}
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm sm:text-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50"
               />
             </div>
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
-              <input
-                id="email"
-                type="email"
-                value={formData.email}
-                readOnly={!isEditing}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm sm:text-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50"
-              />
+             <p>{profileCart.email}</p>
+            </div>
+            <div>
+              <label htmlFor="gender" className="block text-sm font-medium text-gray-700">Gender</label>
+              <p>{profileCart.gender}</p>
+            </div>
+            <div>
+              <label htmlFor="dob" className="block text-sm font-medium text-gray-700">Date of Birth</label>
+              <p>{profileCart.dob}</p>
             </div>
             <div>
               <label htmlFor="mobileNo" className="block text-sm font-medium text-gray-700">Mobile No</label>
               <input
                 id="mobileNo"
-                type="text"
-                value={formData.mobileNo}
+                type="number"
+                value={profileCart.mobileno}
                 readOnly={!isEditing}
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm sm:text-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50"
               />
             </div>
             <div>
-              <label htmlFor="alternateMobileNo" className="block text-sm font-medium text-gray-700">Alternate Mobile No</label>
+              <label htmlFor="alternatemobileno" className="block text-sm font-medium text-gray-700">Alternate Mobile No</label>
               <input
-                id="alternateMobileNo"
-                type="text"
-                value={formData.alternateMobileNo}
+                id="alternatemobileno"
+                type="number"
+                value={profileCart.alternatemobileno}
                 readOnly={!isEditing}
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm sm:text-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50"
               />
@@ -117,7 +123,37 @@ const Profile = () => {
               <textarea
                 id="address"
                 rows="3"
-                value={formData.address}
+                value={profileCart.address}
+                readOnly={!isEditing}
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm sm:text-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50"
+              />
+            </div>
+            <div>
+              <label htmlFor="pincode" className="block text-sm font-medium text-gray-700">pincode</label>
+              <input
+                id="pincode"
+                type="number"
+                value={profileCart.pincode}
+                readOnly={!isEditing}
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm sm:text-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50"
+              />
+            </div>
+            <div>
+              <label htmlFor="state" className="block text-sm font-medium text-gray-700">state</label>
+              <input
+                id="state"
+                type="text"
+                value={profileCart.state}
+                readOnly={!isEditing}
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm sm:text-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50"
+              />
+            </div>
+            <div>
+              <label htmlFor="occupation" className="block text-sm font-medium text-gray-700">occupation</label>
+              <input
+                id="occupation"
+                type="text"
+                value={profileCart.occupation}
                 readOnly={!isEditing}
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm sm:text-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50"
               />
