@@ -8,13 +8,16 @@ const Profile = () => {
 
   const profileCart =useSelector(store=>store.profile.profileData)
   console.log(profileCart)
-  const [formData, setFormData] = useState({
-    fullName: "Avinash Nalawade",
-    email: "Avinashnalawade65@gmail.com",
-    mobileNo: "+917219434448",
-    alternateMobileNo: "-",
-    address: "At-Ganeshwadi , post-Nagthane tal/Dist-Satara , 415519",
-    profileImage: "https://cdn-icons-png.flaticon.com/128/2202/2202112.png",
+  const [profile, setProfile] = useState({
+    fullname: "",
+    mobileno: "",
+    alternatemobileno: "",
+    address: "",
+    pincode: "",
+    state: "",
+    occupation: "",
+    // profileimage: "",
+    
   });
 
   const [passwordData, setPasswordData] = useState({
@@ -32,7 +35,7 @@ const Profile = () => {
     setIsEditing(!isEditing);
     if (isEditing) {
       setIsChangingPassword(false);
-      setFormData()
+      setProfile()
     }
   };
 
@@ -62,7 +65,7 @@ const Profile = () => {
         <div className="flex items-center justify-between border-b pb-4 mb-6">
           <div className="flex-shrink-0">
             <img
-              src={formData.profileImage || "https://default-image-url.png"}
+              src={profile.profileImage || "https://default-image-url.png"}
               alt="Profile"
               className="w-24 h-24 rounded-full object-cover border-4 border-indigo-600"
             />
@@ -77,9 +80,9 @@ const Profile = () => {
         <form>
           <div className="space-y-6">
             <div>
-              <label htmlFor="fullName" className="block text-sm font-medium text-gray-700">Full Name</label>
+              <label htmlFor="fullname" className="block text-sm font-medium text-gray-700">Full Name</label>
               <input
-                id="fullName"
+                id="fullname"
                 type="text"
                 value={profileCart.fullname}
                 readOnly={!isEditing}
@@ -99,9 +102,9 @@ const Profile = () => {
               <p>{profileCart.dob}</p>
             </div>
             <div>
-              <label htmlFor="mobileNo" className="block text-sm font-medium text-gray-700">Mobile No</label>
+              <label htmlFor="mobileno" className="block text-sm font-medium text-gray-700">Mobile No</label>
               <input
-                id="mobileNo"
+                id="mobileno"
                 type="number"
                 value={profileCart.mobileno}
                 readOnly={!isEditing}

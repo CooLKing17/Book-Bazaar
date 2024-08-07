@@ -5,9 +5,6 @@ import { setProfileData } from "../Store/Profilecart";
 
 const SignIn = () => {
   const [isSignIn, setIsSignIn] = useState(true);
-
-
-
   const dispatch = useDispatch()
 
   const [user, setUser] = useState({

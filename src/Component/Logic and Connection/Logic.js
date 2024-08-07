@@ -1,6 +1,7 @@
 import axios from "axios";
 export const server = "http://localhost:8080";
 
+// User logic only 
 export const userUpload = async (data) => {
   console.log("Uploading data:", data);
   try {
@@ -59,3 +60,4 @@ export const getProfile =async (data)=>{
   }
 
 }
+
