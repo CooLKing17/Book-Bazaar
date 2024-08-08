@@ -1,10 +1,10 @@
-package com.example.Demo;
+package com.example.SecondHandBookBazaar;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class AvinashApplicationTests {
+class AvinashRNalawadeApplicationTests {
 
 	@Test
 	void contextLoads() {

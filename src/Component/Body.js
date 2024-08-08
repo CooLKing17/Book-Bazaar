@@ -10,20 +10,20 @@ const Body = () => {
   const [bookList, setBookList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const getData = async () => {
-    try {
-      const response = await axios.get(`${server}/sellbook/getbookDetails/${bookId}`);
-      console.log("GetProfile successful:", response.data);
-      setBookList(response.data);
-      setIsLoading(false);
-    } catch (error) {
-      console.error("Error fetching book details:", error);
-      setIsLoading(false);
-    }
-  };
+  // const getData = async () => {
+  //   try {
+  //     const response = await axios.get(`${server}/sellbook/getbookDetails/${bookId}`);
+  //     console.log("GetProfile successful:", response.data);
+  //     setBookList(response.data);
+  //     setIsLoading(false);
+  //   } catch (error) {
+  //     console.error("Error fetching book details:", error);
+  //     setIsLoading(false);
+  //   }
+  // };
     console.log(bookList.authorName)
   useEffect(() => {
-    getData();
+    // getData();
   }, []);
 
   return (

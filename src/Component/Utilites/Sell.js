@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios"; // Make sure to import axios
-import  { server } from '../Logic and Connection/Logic'
+import { server } from "../Logic and Connection/Logic";
 const Sell = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -18,7 +18,7 @@ const Sell = () => {
     language: "",
     missingPages: "",
     totalPages: "",
-    publisher: "",
+    bookpublisher: "",
     quantity: "",
     email: "",
   });
@@ -38,7 +38,10 @@ const Sell = () => {
     e.preventDefault();
     try {
       // Save book details
-      const bookResponse = await axios.post(`${server}/sellbook/addBook`, formData);
+      const bookResponse = await axios.post(
+        `${server}/sellbook/addBook`,
+        formData
+      );
       const bookId = bookResponse.data.id;
 
       // Prepare image data
@@ -62,7 +65,64 @@ const Sell = () => {
       alert("Failed to upload book and images");
     }
   };
-
+  const categories = [
+    {
+      type: "Select an option",
+      branches: []
+    },
+    {
+      type: "Fiction",
+      branches: [
+        "Select an option",
+        "Literary Fiction",
+        "Mystery/Thriller/Crime",
+        "Science Fiction",
+        "Fantasy",
+        "Historical Fiction",
+        "Romance",
+        "Horror"
+      ]
+    },
+    {
+      type: "Non-Fiction",
+      branches: [
+        "Select an option",
+        "Biography/Autobiography/Memoir",
+        "Self-Help",
+        "Travel",
+        "Cookbooks",
+        "Health/Wellness",
+        "History",
+        "Science/Nature",
+        "True Crime",
+        "Educational"
+      ]
+    },
+    {
+      type: "Educational",
+      branches: []
+    },
+    {
+      type: "Other Formats",
+      branches: [
+        "Select an option",
+        "Journal/Notebook",
+        "Comic Book",
+        "Graphic Novel"
+      ]
+    },
+    {
+      type: "Specialized Categories",
+      branches: [
+          "Select an option",
+          "Reference",
+          "Poetry",
+          "Religious/Spiritual",
+          "Magazines",
+          "Zines"]
+    }
+  ];
+  const selectedCategory = categories.find(cat => cat.type === formData.type);
   return (
     <div className="mt-20 px-4 flex justify-center items-center min-h-screen bg-gradient-to-r from-blue-100 to-blue-200">
       <div className="w-full max-w-lg p-10 bg-white rounded-xl shadow-xl">
@@ -120,7 +180,7 @@ const Sell = () => {
           </div>
           <div className="mb-5">
             <label className="block text-gray-700 font-medium mb-2">
-              Select Type
+              Select Category
             </label>
             <select
               name="type"
@@ -128,32 +188,47 @@ const Sell = () => {
               onChange={handleInputChange}
               className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50"
             >
-              <option value="">Select an option</option>
-              <option value="Engineering">Engineering</option>
-              <option value="Novel">Novel</option>
-              <option value="Comic">Comic</option>
+               {categories.map((cat, index) => (
+            <option key={index} value={cat.type}>
+              {cat.type}
+            </option>
+          ))}
             </select>
           </div>
-          {formData.type === "Engineering" && (
-            <div className="mb-5">
-              <label className="block text-gray-700 font-medium mb-2">
-                Branch
-              </label>
-              <select
-                name="branch"
-                value={formData.branch}
-                onChange={handleInputChange}
-                className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50"
-              >
-                <option value="">Select an option</option>
-                <option value="Mechanical">Mechanical</option>
-                <option value="Civil">Civil</option>
-                <option value="CS">CS</option>
-                <option value="IT">IT</option>
-                <option value="Chemical">Chemical</option>
-              </select>
-            </div>
-          )}
+          
+      {selectedCategory && selectedCategory.branches.length > 0 ? (
+        <div className="mb-5">
+          <label className="block text-gray-700 font-medium mb-2">
+            Type
+          </label>
+          <select
+            name="branch"
+            value={formData.branch}
+            onChange={handleInputChange}
+            className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50"
+          >
+            {selectedCategory.branches.map((branch, index) => (
+              <option key={index} value={branch}>
+                {branch}
+              </option>
+            ))}
+          </select>
+        </div>
+      ) : (
+        <div className="mb-5">
+          <label className="block text-gray-700 font-medium mb-2">
+            Type
+          </label>
+          <input
+            type="text"
+            name="branch"
+            value={formData.branch}
+            onChange={handleInputChange}
+            className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50"
+            placeholder="Enter type"
+          />
+        </div>
+      )}
           <div className="mb-5">
             <label className="block text-gray-700 font-medium mb-2">
               Book Condition
@@ -301,8 +376,8 @@ const Sell = () => {
             </label>
             <input
               type="text"
-              name="publisher"
-              value={formData.publisher}
+              name="bookpublisher"
+              value={formData.bookpublisher}
               onChange={handleInputChange}
               className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50"
             />
