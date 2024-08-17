@@ -5,9 +5,10 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.example.SecondHandBookBazaar.Entity.SellBook;
-@Repository
-public interface SellBookRepo extends JpaRepository<SellBook, Long> {
+import com.example.SecondHandBookBazaar.Entity.Image;
 
-    List<SellBook> findByUserId(Long id);
+
+@Repository
+public interface ImageRepo extends JpaRepository<Image ,Long> {
+	List<Image> findBySellId(Long sellId);
 }

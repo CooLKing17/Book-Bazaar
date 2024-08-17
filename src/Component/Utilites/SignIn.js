@@ -1,12 +1,23 @@
 import { useState } from "react";
-import { getProfile, LoginVerification, userUpload } from "../Logic and Connection/Logic";
+import {
+  getProfile,
+  LoginVerification,
+  server,
+  userUpload,
+} from "../Logic and Connection/Logic";
 import { useDispatch } from "react-redux";
+import {ToastContainer, toast} from 'react-toastify';
+import 'react-toastify/ReactToastify.css'
 import { setProfileData } from "../Store/Profilecart";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const SignIn = () => {
   const [isSignIn, setIsSignIn] = useState(true);
-  const dispatch = useDispatch()
-
+  const dispatch = useDispatch();
+  const navigate= useNavigate();
+    
+ 
   const [user, setUser] = useState({
     fullname: "",
     email: "",
@@ -18,7 +29,6 @@ const SignIn = () => {
     pincode: "",
     state: "",
     occupation: "",
-    // profileimage: "",
     password: "",
     confirmpassword: "",
   });
@@ -29,62 +39,126 @@ const SignIn = () => {
   });
 
   const handleData = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-
+    const { name, value } = e.target;
     setUser({ ...user, [name]: value });
   };
-
-  const handleSubmit = async(e) => {
-    e.preventDefault();
-    if (
-      user.fullname &&
-      user.email &&
-      user.mobileno &&
-      user.address &&
-      user.pincode
-    ) {
-      if (user.password.toLowerCase() !== user.confirmpassword.toLowerCase()) {
-        console.log("password not matched");
-      } else {
-        const data = await userUpload(user);
-        
-        if(data){
-          console.log("success" , data);
-          dispatch(setProfileData(data));
-        }
-        else{
-          console.log("failed");
-        }
-      }
-    } else {
-      console.log("something is missing");
-    }
+  const [files, setFiles] = useState([]);
+  const handleFileChange = (e) => {
+    setFiles(e.target.files);
   };
+  
+  
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // Destructure necessary fields from user
+    const {
+        fullname,
+        email,
+        mobileno,
+        address,
+        pincode,
+        password,
+        confirmpassword,
+    } = user;
+
+    // Check required fields are filled
+    if (!fullname || !email || !mobileno || !address || !pincode) {
+        console.log("Required fields are missing");
+        toast.warning("Required fields are missing");
+        return;
+    }
+
+    // Check if passwords are provided and match
+    if (!password || !confirmpassword) {
+        console.log("Password fields are missing");
+        toast.warning("Password fields are missing");
+        return;
+    }
+
+    if (password.toLowerCase() !== confirmpassword.toLowerCase()) {
+        console.log("Passwords do not match");
+        toast.warning("Passwords do not match");
+        return;
+    }
+
+    try {
+        // Upload user details first
+        const userResponse = await userUpload(user);
+
+        if (userResponse) {
+            console.log("User registration successful:", userResponse);
+            const UserId = userResponse.id;
+            localStorage.setItem("UserId", UserId);
+
+            // Check if there is a file to upload
+            if (files && files.length > 0) {
+                const formData = new FormData();
+                formData.append("file", files[0]);
+
+                try {
+                    const data = await axios.post(
+                        `${server}/user/api/uploadImage/${UserId}`,
+                        formData,
+                        {
+                            headers: {
+                                "Content-Type": "multipart/form-data",
+                            },
+                        }
+                    );
+                    console.log("Image upload successful:", data);
+                    dispatch(setProfileData(data));
+                    toast.success("Registration Successful");
+                    navigate("/")
+                } catch (error) {
+                    console.error("Image upload failed:", error);
+                    toast.warning("Image upload failed, but registration was successful.");
+                    navigate("/")
+                }
+            } else {
+                console.log("No image to upload");
+                toast.warning("No image to upload");
+                navigate("/")
+            }
+        } else {
+            console.log("User registration failed");
+            toast.warning("Email already registered");
+        }
+    } catch (error) {
+        console.error("User registration failed:", error);
+        toast.error("User registration failed");
+    }
+};
 
 
+  
 
-  const handleLogin =async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
     if (loginUser.email && loginUser.password) {
-      const data=await LoginVerification(loginUser);
-      console.log(data)
-      if(data.status){
-       const info =await getProfile(loginUser)
-       console.log(info);
-       if(info){
-        dispatch(setProfileData(info))
-       }
-       else{
-        console.log("data not comming")
-       }
+      const data = await LoginVerification(loginUser);
+      const UserId = data.id;
+      console.log(UserId)
+      localStorage.setItem("UserId",UserId)
+      console.log(data);
+      if (data.status) {
+        const info = await getProfile(UserId);
+        console.log(info);
+        if(info){
+          dispatch(setProfileData(info));
+          navigate("/")
+        } else {
+          console.log("data not coming");
+        }
       }
     } else {
       prompt("Sorry");
       setIsSignIn();
     }
   };
+  
 
   return (
     <>
@@ -188,7 +262,7 @@ const SignIn = () => {
         </div>
       ) : (
         // Sign up
-        <div className="flex min-h-screen items-center justify-center bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+        <div className="flex min-h-screen items-center justify-center bg-gray-100 py-20 px-4 sm:px-6 lg:px-8">
           <div className="max-w-md w-full bg-white p-8 rounded-lg shadow-md">
             <div>
               <h2 className="text-center text-3xl font-extrabold text-gray-900">
@@ -205,9 +279,11 @@ const SignIn = () => {
               </p>
             </div>
             <form method="post" className="mt-8 space-y-6">
+            <ToastContainer className=" w-5 "/>
               <div className="space-y-4">
+              
                 <div>
-                  <label htmlFor="full-name" className="sr-only">
+                  <label htmlFor="fullname" className="sr-only">
                     Full Name
                   </label>
                   <input
@@ -247,68 +323,38 @@ const SignIn = () => {
                     name="dob"
                     value={user.dob}
                     onChange={handleData}
-                    type="date"
+                    type="text"
                     autoComplete="bday"
                     required
                     className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-500 text-gray-900 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                    placeholder="Date of Birth"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label className="block text-sm font-medium text-gray-900">
-                    Gender
-                  </label>
-                  <div className="flex items-center space-x-4">
-                    <div>
-                      <input
-                        type="radio"
-                        id="male"
-                        name="gender"
-                        required
-                        onChange={handleData}
-                        value="male"
-                        className="focus:ring-indigo-500 focus:border-indigo-500 text-indigo-600 border-gray-300"
-                      />
-                      <label htmlFor="male" className="ml-2">
-                        Male
-                      </label>
-                    </div>
-                    <div>
-                      <input
-                        type="radio"
-                        id="female"
-                        name="gender"
-                        value="female"
-                        onChange={handleData}
-                        required
-                        className="focus:ring-indigo-500 focus:border-indigo-500 text-indigo-600 border-gray-300"
-                      />
-                      <label htmlFor="female" className="ml-2">
-                        Female
-                      </label>
-                    </div>
-                    <div>
-                      <input
-                        type="radio"
-                        id="transgender"
-                        name="gender"
-                        value="transgender"
-                        onChange={handleData}
-                        required
-                        className="focus:ring-indigo-500 focus:border-indigo-500 text-indigo-600 border-gray-300"
-                      />
-                      <label htmlFor="female" className="ml-2">
-                      Transgender
-                      </label>
-                    </div>
-                  </div>
+                    onClick={(e) => e.target.type = "date"} // Ensure the input type remains date
+                    onBlur={(e) => !user.dob && (e.target.value = '')} // Clear value if it’s empty to show placeholder text
+                    placeholder="Date of Birth" // Text to indicate format
+         />
                 </div>
                 <div>
-                  <label htmlFor="mobile-number" className="sr-only">
-                    Mobile No
+                  <label htmlFor="gender" className="sr-only">
+                    Gender
+                  </label>
+                  <select
+                    id="gender"
+                    name="gender"
+                    value={user.gender}
+                    onChange={handleData}
+                    className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-500 text-gray-900 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  >
+                    <option value="">Select Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+                <div>
+                  <label htmlFor="mobileno" className="sr-only">
+                    Mobile Number
                   </label>
                   <input
-                    id="mobile-number"
+                    id="mobileno"
                     name="mobileno"
                     value={user.mobileno}
                     onChange={handleData}
@@ -316,60 +362,42 @@ const SignIn = () => {
                     autoComplete="tel"
                     required
                     className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-500 text-gray-900 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                    placeholder="Mobile No"
+                    placeholder="Mobile Number"
                   />
                 </div>
                 <div>
-                  <label htmlFor="alternate-mobile-number" className="sr-only">
-                    Alternate Mobile No
+                  <label htmlFor="alternatemobileno" className="sr-only">
+                    Alternate Mobile Number
                   </label>
                   <input
-                    id="alternate-mobile-number"
+                    id="alternatemobileno"
                     name="alternatemobileno"
                     value={user.alternatemobileno}
                     onChange={handleData}
                     type="tel"
                     className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-500 text-gray-900 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                    placeholder="Alternate Mobile No"
+                    placeholder="Alternate Mobile Number"
                   />
                 </div>
-                <div>
-                  <label htmlFor="pincode" className="sr-only">
-                    Occupation
-                  </label>
-                  <input
-                    id="occupation"
-                    name="occupation"
-                    value={user.occupation}
-                    onChange={handleData}
-                    type="text"
-                    autoComplete="occupation"
-                    required
-                    className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-500 text-gray-900 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                    placeholder="occupation"
-                  />
-                </div>
-
                 <div>
                   <label htmlFor="address" className="sr-only">
                     Address
                   </label>
-                  <textarea
+                  <input
                     id="address"
                     name="address"
                     value={user.address}
                     onChange={handleData}
                     type="text"
-                    autoComplete="address"
+                    autoComplete="street-address"
                     required
-                    rows="3"
                     className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-500 text-gray-900 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     placeholder="Address"
-                  ></textarea>
+                  />
                 </div>
                 <div>
                   <label htmlFor="pincode" className="sr-only">
-                    Pin Code
+                    Pincode
                   </label>
                   <input
                     id="pincode"
@@ -377,13 +405,11 @@ const SignIn = () => {
                     value={user.pincode}
                     onChange={handleData}
                     type="text"
-                    autoComplete="postal-code"
                     required
                     className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-500 text-gray-900 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     placeholder="Pincode"
                   />
                 </div>
-
                 <div>
                   <label htmlFor="state" className="sr-only">
                     State
@@ -394,12 +420,47 @@ const SignIn = () => {
                     value={user.state}
                     onChange={handleData}
                     type="text"
-                    autoComplete="address-level1"
                     required
                     className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-500 text-gray-900 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     placeholder="State"
                   />
                 </div>
+                <div>
+                  <label htmlFor="occupation" className="sr-only">
+                    Occupation
+                  </label>
+                  <input
+                    id="occupation"
+                    name="occupation"
+                    value={user.occupation}
+                    onChange={handleData}
+                    type="text"
+                    className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-500 text-gray-900 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    placeholder="Occupation"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="uploadimage" className="sr-only">
+                    Upload Image
+                  </label>
+                  <input
+                    id="uploadimage"
+                    name="uploadimage"
+                    onChange={handleFileChange}
+                    type="file"
+                    accept="image/*"
+                    className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-500 text-gray-900 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  />
+                </div>
+                {user.profileimage && (
+                  <div className="mt-4">
+                    <img
+                      src={user.profileimage}
+                      alt="Profile Preview"
+                      className="w-32 h-32 rounded-full mx-auto"
+                    />
+                  </div>
+                )}
                 <div>
                   <label htmlFor="password" className="sr-only">
                     Password
@@ -421,70 +482,27 @@ const SignIn = () => {
                     Confirm Password
                   </label>
                   <input
-                    id="confirmpassword"
+                    id="confirm-password"
                     name="confirmpassword"
                     value={user.confirmpassword}
                     onChange={handleData}
                     type="password"
-                    autoComplete="new-password"
                     required
                     className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-500 text-gray-900 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     placeholder="Confirm Password"
                   />
                 </div>
                 <div>
-                  <label
-                    htmlFor="upload-image"
-                    className="block text-sm font-medium text-gray-700"
+                  <button
+                    type="submit"
+                    onClick={handleSubmit}
+                    className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                   >
-                    Upload Image
-                  </label>
-                  <input
-                    id="upload-image"
-                    name="uploadimage"
-                    value={user.profileimage}
-                    onChange={handleData}
-                    type="file"
-                    accept="image/*"
-                    className="mt-1 block w-full text-sm text-gray-900 border border-gray-300 rounded-md cursor-pointer bg-gray-50 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 sm:text-sm"
-                  />
+                    Sign Up
+                  </button>
                 </div>
               </div>
-
-              <div className="flex items-center justify-between">
-                <div className="flex items-center">
-                  <input
-                    id="terms"
-                    name="terms"
-                    value={user.terms}
-                    onChange={handleData}
-                    type="checkbox"
-                    required
-                    className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-                  />
-                  <label
-                    htmlFor="terms"
-                    className="ml-2 block text-sm text-gray-900"
-                  >
-                    I agree to the{" "}
-                    <a
-                      href="/"
-                      className="font-medium text-indigo-600 hover:text-indigo-500"
-                    >
-                      terms and conditions
-                    </a>
-                  </label>
-                </div>
-              </div>
-              <div>
-                <button
-                  type="submit"
-                  onClick={handleSubmit}
-                  className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                >
-                  Sign Up
-                </button>
-              </div>
+              
             </form>
           </div>
         </div>

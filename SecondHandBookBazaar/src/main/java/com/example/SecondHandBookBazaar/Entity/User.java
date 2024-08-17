@@ -4,6 +4,8 @@ import java.sql.Blob;
 import java.time.LocalDate;
 import java.util.List;
 
+
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -49,7 +51,7 @@ public class User {
 	}
 
 	public User(Long id, String fullname, String email, String gender, LocalDate dob, Long mobileno,
-			Long alternatemobileno, String address, Integer pincode, String state, String occupation, Blob profileimage,
+			Long alternatemobileno, String address, Integer pincode, String state, String occupation,Blob profileimage,
 			String password, String confirmpassword, List<com.example.SecondHandBookBazaar.Entity.SellBook> sellBook,
 			List<com.example.SecondHandBookBazaar.Entity.DonateBook> donateBook,
 			List<com.example.SecondHandBookBazaar.Entity.OrderBook> orderBook) {

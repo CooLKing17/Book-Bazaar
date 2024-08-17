@@ -2,6 +2,8 @@ package com.example.SecondHandBookBazaar.Entity;
 
 
 
+import java.sql.Blob;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,7 +19,7 @@ public class Image {
     private Long id;
 
     @Lob
-    private byte[] image;
+    private Blob image;
     private String name;
 
     @ManyToOne
@@ -26,7 +28,7 @@ public class Image {
 
     public Image() {}
 
-    public Image(Long id, byte[] image, String name, SellBook sell) {
+    public Image(Long id, Blob image, String name, SellBook sell) {
         this.id = id;
         this.image = image;
         this.name = name;
@@ -37,7 +39,7 @@ public class Image {
         return id;
     }
 
-    public byte[] getImage() {
+    public Blob getImage() {
         return image;
     }
 
@@ -53,7 +55,7 @@ public class Image {
         this.id = id;
     }
 
-    public void setImage(byte[] image) {
+    public void setImage(Blob image) {
         this.image = image;
     }
 

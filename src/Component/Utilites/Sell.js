@@ -8,7 +8,9 @@ const Sell = () => {
     authorName: "",
     rating: "",
     type: "",
+    subType:"",
     bookCondition: "",
+    condition:"",
     originalPrice: "",
     sellingPrice: "",
     edition: "",
@@ -20,9 +22,9 @@ const Sell = () => {
     totalPages: "",
     bookpublisher: "",
     quantity: "",
-    email: "",
   });
 
+  
   const [files, setFiles] = useState([]);
 
   const handleInputChange = (e) => {
@@ -38,6 +40,7 @@ const Sell = () => {
     e.preventDefault();
     try {
       // Save book details
+      console.log(formData)
       const bookResponse = await axios.post(
         `${server}/sellbook/addBook`,
         formData
@@ -203,13 +206,13 @@ const Sell = () => {
           </label>
           <select
             name="branch"
-            value={formData.branch}
+            value={formData.subType}
             onChange={handleInputChange}
             className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50"
           >
-            {selectedCategory.branches.map((branch, index) => (
-              <option key={index} value={branch}>
-                {branch}
+            {selectedCategory.branches.map((subType, index) => (
+              <option key={index} value={subType}>
+                {subType}
               </option>
             ))}
           </select>
@@ -222,7 +225,7 @@ const Sell = () => {
           <input
             type="text"
             name="branch"
-            value={formData.branch}
+            value={formData.subType}
             onChange={handleInputChange}
             className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50"
             placeholder="Enter type"
@@ -241,10 +244,10 @@ const Sell = () => {
             >
               <option value="">Select an option</option>
               <option value="New">New</option>
-              <option value="Old">Old</option>
+              <option value="Used">Used</option>
             </select>
           </div>
-          {formData.bookCondition === "Old" && (
+          {formData.bookCondition === "Used" && (
             <div className="mb-5">
               <label className="block text-gray-700 font-medium mb-2">
                 Condition

@@ -9,6 +9,9 @@ import {
   MenuItems,
 } from "@headlessui/react";
 import { Link } from "react-router-dom";
+import { UserId } from "./Logic and Connection/Logic";
+import { useSelector } from "react-redux";
+
 
 const navigation = [
   {
@@ -59,7 +62,11 @@ function classNames(...classes) {
 
 const NavBar = () => {
 
+  const SignOut=()=>{
+    localStorage.clear();
+  }
   
+  const profile = useSelector((store) => store.profile.profileData);
   return (
     <Disclosure
       as="nav"
@@ -173,7 +180,12 @@ const NavBar = () => {
                       <span className="sr-only">Open user menu</span>
                       <img
                         alt=""
-                        src="https://cdn-icons-png.flaticon.com/128/1177/1177568.png"
+                        src={
+                 profile?.profileimage
+                  ? `data:image/jpeg;base64,${profile.profileimage}`
+                  :"https://cdn-icons-png.flaticon.com/128/1177/1177568.png"
+
+              }
                         className="h-10 w-10 rounded-full"
                       />
                     </MenuButton>
@@ -206,7 +218,7 @@ const NavBar = () => {
                         Donate Book Details
                       </Link>
                     </MenuItem>
-                     {  "1" ?
+                     {  !UserId ?
                     <MenuItem>
                       <Link
                         to="/signin=signup"
@@ -218,6 +230,7 @@ const NavBar = () => {
                     <MenuItem>
                       <a
                         href="/"
+                        onClick={SignOut}
                         className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
                       >
                         Sign out
