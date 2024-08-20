@@ -7,12 +7,14 @@ import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.Base64;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.SecondHandBookBazaar.DataTransferObjects.BookTypeDTO;
 import com.example.SecondHandBookBazaar.DataTransferObjects.ImageDTO;
 import com.example.SecondHandBookBazaar.DataTransferObjects.SellBookDTO;
 import com.example.SecondHandBookBazaar.DataTransferObjects.SellBookEdit;
@@ -136,10 +138,10 @@ public class sellBookServiceImpl implements SellBookService {
     }
 
     @Override
-    public List<SellBookDTO> getAllBooks() {
+    public List<BookTypeDTO> getAllBooks() {
         List<SellBook> books = sellBookRepo.findAll();
-        List<SellBookDTO> bookDTOs = books.stream().map(this::mapToDTO).collect(Collectors.toList());
-        return bookDTOs;
+        Map<String,List<SellBook>> map = books.stream().collect(Collectors.groupingBy(SellBook::getType));
+        return map.entrySet().stream().map(entry->new BookTypeDTO(entry.getKey(),entry.getValue().stream().map(this::mapToDTO).collect(Collectors.toList()))).collect(Collectors.toList());
     }
 
     private SellBookDTO mapToDTO(SellBook sellBook) {

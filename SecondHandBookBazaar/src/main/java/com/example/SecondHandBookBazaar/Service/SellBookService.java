@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.example.SecondHandBookBazaar.DataTransferObjects.BookTypeDTO;
 import com.example.SecondHandBookBazaar.DataTransferObjects.SellBookDTO;
 import com.example.SecondHandBookBazaar.DataTransferObjects.SellBookEdit;
 import com.example.SecondHandBookBazaar.Entity.Image;
@@ -20,7 +21,7 @@ public interface SellBookService {
 
     public Optional<SellBookDTO> GetBookInfo(Long id);
 
-    public List<SellBookDTO> getAllBooks();
+    public List<BookTypeDTO> getAllBooks();
 
     public List<SellBookDTO> getUserBookList(Long id);
 

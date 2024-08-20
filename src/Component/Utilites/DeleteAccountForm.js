@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { DeleteAccount } from '../Logic and Connection/Logic';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { deleteAccount } from '../Store/Profilecart';
+
 const DeleteAccountForm = ({setResponse}) => {
     const [deleteAccountData, setDeleteAccountData] = useState({
         email: '',
@@ -10,16 +9,30 @@ const DeleteAccountForm = ({setResponse}) => {
     });
 
     const navigate = useNavigate();
+   
     const handleDeleteAccount = async () => {
-        if(deleteAccountData.email && deleteAccountData.password) {
-            const data = await DeleteAccount(deleteAccountData);
-            if (data && data.massage) {
-                setResponse(data.massage);
-                console.log(data.massage);
-                localStorage.clear()
-                navigate('/');
-            } else {
-                setResponse("Something went wrong. Please try again.");
+        if (deleteAccountData.email && deleteAccountData.password) {
+            try {
+                const data = await DeleteAccount(deleteAccountData);
+                if (data && data.massage) {
+                    setResponse(data.massage);
+                    console.log(data.massage);
+                    if(data.massage==="Your account has been deleted"){
+                        localStorage.clear();
+                        navigate("/")
+                        window.location.reload();
+                        
+                    }else{
+                        console.log("in")
+                        navigate("/profile=page")
+                    }
+
+                } else {
+                    setResponse("Something went wrong. Please try again.");
+                }
+            } catch (error) {
+                setResponse("An error occurred. Please try again.");
+                console.error("Error deleting account:", error);
             }
         } else {
             setResponse("Please fill all the fields");

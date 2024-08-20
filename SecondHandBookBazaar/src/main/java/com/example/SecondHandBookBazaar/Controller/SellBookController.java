@@ -3,6 +3,7 @@ package com.example.SecondHandBookBazaar.Controller;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.SecondHandBookBazaar.DataTransferObjects.BookTypeDTO;
 import com.example.SecondHandBookBazaar.DataTransferObjects.SellBookDTO;
 import com.example.SecondHandBookBazaar.DataTransferObjects.SellBookEdit;
 import com.example.SecondHandBookBazaar.Entity.Image;
@@ -23,6 +24,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,6 +34,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 
 @RestController
+@CrossOrigin
 @RequestMapping("/sellBook/api")
 public class SellBookController {
     @Autowired
@@ -76,7 +79,7 @@ public class SellBookController {
     }
 
     @GetMapping("/getAllBooks")
-    public List<SellBookDTO> getAllBooks() {
+    public List<BookTypeDTO> getAllBooks() {
         return sellBookService.getAllBooks();
     }
 

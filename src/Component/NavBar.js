@@ -9,9 +9,11 @@ import {
   MenuItems,
 } from "@headlessui/react";
 import { Link } from "react-router-dom";
-import { UserId } from "./Logic and Connection/Logic";
+
 import { useSelector } from "react-redux";
 
+const userID = localStorage.getItem("UserId");
+console.log(userID)
 
 const navigation = [
   {
@@ -33,20 +35,38 @@ const navigation = [
     icon: "https://cdn-icons-png.flaticon.com/128/1992/1992622.png",
   },
   {
-    name: "Buy Now",
+    name: "Categories",
     to: "/",
     current: false,
     icon: "https://cdn-icons-png.flaticon.com/128/3986/3986107.png",
-    Types: [
-      {
-        cata: "Comic",
-        to: "/comic",
-      },
-      {
-        cata: "Logic",
-        to: "/logic",
-      },
-    ],
+   Types: [
+  { cata: "Biography/Autobiography/Memoir", to: "/biography" },
+  { cata: "Self-Help", to: "/self-help" },
+  { cata: "Travel", to: "/travel" },
+  { cata: "Cookbooks", to: "/cookbooks" },
+  { cata: "Health/Wellness", to: "/health-wellness" },
+  { cata: "History", to: "/history" },
+  { cata: "Science/Nature", to: "/science-nature" },
+  { cata: "True Crime", to: "/true-crime" },
+  { cata: "Educational", to: "/educational" },
+  { cata: "Literary Fiction", to: "/literary-fiction" },
+  { cata: "Mystery/Thriller/Crime", to: "/mystery-thriller-crime" },
+  { cata: "Science Fiction", to: "/science-fiction" },
+  { cata: "Fantasy", to: "/fantasy" },
+  { cata: "Historical Fiction", to: "/historical-fiction" },
+  { cata: "Romance", to: "/romance" },
+  { cata: "Horror", to: "/horror" },
+  { cata: "Reference", to: "/reference" },
+  { cata: "Poetry", to: "/poetry" },
+  { cata: "Religious/Spiritual", to: "/religious-spiritual" },
+  { cata: "Magazines", to: "/magazines" },
+  { cata: "Zines", to: "/zines" },
+  { cata: "Journal/Notebook", to: "/journal-notebook" },
+  { cata: "Comic Book", to: "/comic-book" },
+  { cata: "Graphic Novel", to: "/graphic-novel" },
+  { cata: "Logic", to: "/logic" },
+]
+
   },
   {
     name: "Cart",
@@ -99,59 +119,47 @@ const NavBar = () => {
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex py-4 space-x-2">
                     {navigation.map((item) =>
-                      item.name !== "Buy Now" ? (
+                      item.name !== "Categories" ? (
                         <Link
                           key={item.name}
                           to={item.to}
                           aria-current={item.current ? "page" : undefined}
                           className={classNames(
                             item.current
-                              ? "bg-gray-400 text-white transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110  duration-300"
-                              : "text-white hover:bg-gray-50 hover:text-red-500",
-                            "rounded-md px-3 py-1 text-sm font-medium flex items-center"
+                              ? "bg-gray-400 text-white transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110  duration-300 truncate"
+                              : "text-white hover:bg-gray-50 hover:text-red-500 ",
+                            "rounded-md px-3 py-1 text-sm font-medium flex items-center "
                           )}
                         >
                           <img className="w-9 pr-1 " alt="icon" src={item.icon} />{" "}
                           {item.name}
                         </Link>
                       ) : (
-                        <Menu key={item.name} as="div" className="relative ">
-                          <MenuButton
-                            className={classNames(
-                              "text-white hover:bg-gray-50 hover:text-red-500 rounded-md px-3 py-1 text-sm font-medium flex items-center"
-                            )}
-                          >
-                            <img
-                              className="w-9 pr-1"
-                              alt="buy now"
-                              src={item.icon}
-                            />
-                            {item.name}
-                          </MenuButton>
-                          <MenuItems
-                          transition
-                            className="absolute right-0 z-10 mt-1 w-48 origin-top-right rounded-lg bg-gray-400  shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
-                          >
+                      <Menu key={item.name} as="div" className="relative">
+                        <MenuButton
+                          className="text-white hover:bg-gray-50 hover:text-red-500 rounded-md px-3 py-2 text-sm font-medium flex items-center"
+                        >
+                          <img className="w-6 h-6 mr-1" alt="categories" src={item.icon} />
+                          {item.name}
+                        </MenuButton>
+                        <MenuItems
+                          className="absolute left-0 z-10 mt-2 w-64 origin-top-right rounded-md shadow-lg bg-gray-400 ring-1 ring-black ring-opacity-5 focus:outline-none"
+                        >
+                          <div className="max-h-64 overflow-y-auto custom-scrollbar">
                             {item.Types.map((type) => (
                               <MenuItem key={type.cata}>
-                                
-                                  <Link
-                                    to={type.to}
-                                    className={classNames(
-                                      type.cata
-                                        ? "bg-gray-400"
-                                        : "",
-                                      "block px-4 py-2 text-sm rounded-md text-white font-bold hover:text-red-500 data-[focus]:bg-gray-100"
-                                    )}
-                                  >
-                                    {type.cata}
-                                  </Link>
-                                
+                                <Link
+                                  to={type.to}
+                                  className="block px-4 py-2 text-sm hover:text-red-500 hover:bg-gray-50 "
+                                >
+                                  {type.cata}
+                                </Link>
                               </MenuItem>
                             ))}
-                          </MenuItems>
-                        </Menu>
-                      )
+                          </div>
+                        </MenuItems>
+                      </Menu>
+                    )
                     )}
                   </div>
                 </div>
@@ -207,7 +215,7 @@ const NavBar = () => {
                         to="/donatesell=page"
                         className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
                       >
-                        Sold Book Details
+                           Book Details
                       </Link>
                     </MenuItem>
                     <MenuItem>
@@ -218,24 +226,25 @@ const NavBar = () => {
                         Donate Book Details
                       </Link>
                     </MenuItem>
-                     {  !UserId ?
-                    <MenuItem>
+                     {!userID ?
+                    (<MenuItem>
+                    
                       <Link
                         to="/signin=signup"
                         className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
                       >
                         Sign in
                       </Link>
-                    </MenuItem>:
+                    </MenuItem>):(
                     <MenuItem>
-                      <a
-                        href="/"
+                      <Link
+                        to="/"
                         onClick={SignOut}
                         className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
                       >
                         Sign out
-                      </a>
-                    </MenuItem>
+                      </Link>
+                    </MenuItem>)
                   }
                   </MenuItems>
                 </Menu>

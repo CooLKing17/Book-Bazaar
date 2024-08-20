@@ -1,5 +1,6 @@
 
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const Info = [
   {
@@ -23,6 +24,7 @@ const Info = [
       "bg-back5 bg-no-repeat bg-half w-6/12 flex justify-end  items-end mdx:hidden mdy:bg-mhalf",
     Span: "w-3/4 h-24 bg-back2 bg-half1 bg-no-repeat",
     btn: "Buy Now",
+    link:"/",
     btncss:
       "bg-green-500 p-2 m-2 rounded-full h-24 w-60  mdx:h-16 text-4xl transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 duration-300",
   },
@@ -37,6 +39,7 @@ const Info = [
       "bg-back4 bg-no-repeat bg-half2 w-6/12 flex justify-end  items-end mdx:hidden mdy:bg-mhalf",
     btn: "Donate Now",
     Span: "",
+    link:"/donate=page",
     btncss:
       "bg-green-500 p-2 m-2 rounded-full h-24 w-60 mdx:h-16 text-4xl transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 duration-300",
   },
@@ -51,6 +54,7 @@ const Info = [
     css1Div:
       "bg-back3 bg-no-repeat bg-half2 w-6/12 flex justify-end  items-end mdx:hidden mdy:bg-mhalf",
     btn: "Sell Now",
+    link:"/sell=page",
     btncss:
       "bg-green-500 p-2 m-2 rounded-full h-24 w-60 text-4xl  mdx:h-16 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 duration-300",
   },
@@ -82,9 +86,11 @@ const ScrollBar = () => {
             </p>
             
             {Info[currentIndex].btn && (
+              <Link to={Info[currentIndex].link}>
               <button className={Info[currentIndex].btncss}>
                 {Info[currentIndex].btn}
               </button>
+              </Link>
             )}
            
           </div>

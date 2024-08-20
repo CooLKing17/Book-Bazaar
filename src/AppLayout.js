@@ -37,7 +37,7 @@ const AppLayout = createBrowserRouter(
                     element:<ContactUs />
                 },
                 {
-                    path:"/InfoPage",
+                    path:"/InfoPage=card/:id",
                     element:<InfoPage />
                 },
                 {

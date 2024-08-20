@@ -9,8 +9,8 @@ const Profilecart = createSlice({
     setProfileData: (state, action) => {
       state.profileData = action.payload;
     },
-    deleteAccount: () => {
-      return [];
+    deleteAccount: (state) => {
+      state.profileData=[]
     },
   },
 });

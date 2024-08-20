@@ -1,7 +1,8 @@
 package com.example.SecondHandBookBazaar.Entity;
 
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class SellBook {
     private Long id;
     private String name;
     private String authorName;
-    private LocalDateTime releaseDate;
+    private LocalDate releaseDate;
     private String rating;
     private String type;
     private String subType;
@@ -62,7 +63,7 @@ public class SellBook {
 
     @OneToMany(mappedBy = "sell",cascade = CascadeType.ALL ,fetch = FetchType.LAZY)
     private List<Image> image= new ArrayList<>();
-	public SellBook(Long id, String name, String authorName, LocalDateTime releaseDate, String rating, String type,
+	public SellBook(Long id, String name, String authorName, LocalDate releaseDate, String rating, String type,
 			String subType, String bookCondition, String oldbookcondition, String originalPrice, String sellingPrice,
 			String edition, String description, String isbn10, String isbn13, String language, String missingPages,
 			String totalPages, String bookpublisher, String quantity, User user, List<Image> image) {
@@ -130,11 +131,11 @@ public class SellBook {
 		this.authorName = authorName;
 	}
 
-	public LocalDateTime getReleaseDate() {
+	public LocalDate getReleaseDate() {
 		return releaseDate;
 	}
 
-	public void setReleaseDate(LocalDateTime releaseDate) {
+	public void setReleaseDate(LocalDate releaseDate) {
 		this.releaseDate = releaseDate;
 	}
 

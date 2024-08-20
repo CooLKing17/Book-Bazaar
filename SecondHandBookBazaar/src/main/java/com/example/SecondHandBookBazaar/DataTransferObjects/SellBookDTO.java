@@ -1,7 +1,7 @@
 package com.example.SecondHandBookBazaar.DataTransferObjects;
 
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -12,7 +12,7 @@ public class SellBookDTO {
 
     private Long id;
     private String name;
-    private LocalDateTime releaseDate;
+    private LocalDate releaseDate;
     private String authorName;
     private String rating;
     private String type;
@@ -34,7 +34,7 @@ public class SellBookDTO {
     private String quantity;
     private List<ImageDTO> images;
     private Long userId;
-	public SellBookDTO(Long id, String name, LocalDateTime releaseDate, String authorName, String rating, String type,
+	public SellBookDTO(Long id, String name, LocalDate releaseDate, String authorName, String rating, String type,
 			String subType, String bookCondition, String oldbookcondition, String originalPrice, String sellingPrice,
 			String edition, String description, String isbn10, String isbn13, String language, String missingPages,
 			String totalPages, String bookpublisher, String quantity, List<ImageDTO> images, Long userId) {
@@ -87,10 +87,10 @@ public class SellBookDTO {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public LocalDateTime getReleaseDate() {
+	public LocalDate getReleaseDate() {
 		return releaseDate;
 	}
-	public void setReleaseDate(LocalDateTime releaseDate) {
+	public void setReleaseDate(LocalDate releaseDate) {
 		this.releaseDate = releaseDate;
 	}
 	public String getAuthorName() {
