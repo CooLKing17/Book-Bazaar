@@ -185,14 +185,25 @@ public class sellBookServiceImpl implements SellBookService {
     }
 
     @Override
-    public Optional<SellBookDTO> EditBook(Long id, SellBookEdit user) {
+    public Response EditBook(Long id, SellBookEdit user) {
+    	Long iid =(long) 0;
         Optional<SellBook> bookOptional = sellBookRepo.findById(id);
     if (bookOptional.isPresent()) {
         SellBook sellBook = bookOptional.get();
-        sellBook.setSellingPrice(user.getSellingPrice());
-        sellBook.setDescription(user.getDescription());
-        sellBook.setMissingPages(user.getMissingPages());
-        sellBook.setQuantity(user.getQuantity());
+        if (user.getSellingPrice() != null) {
+        	sellBook.setSellingPrice(user.getSellingPrice());
+        	}
+        if (user.getDescription() != null) {
+        	sellBook.setDescription(user.getDescription());
+        	}
+        if (user.getMissingPages() != null) {
+        	sellBook.setMissingPages(user.getMissingPages());
+        	}
+        if (user.getQuantity() != null) {
+        	sellBook.setQuantity(user.getQuantity());
+        	}
+
+        
         // Save the updated book entity
         SellBook updatedBook = sellBookRepo.save(sellBook);
 
@@ -202,10 +213,11 @@ public class sellBookServiceImpl implements SellBookService {
 
         // Convert to DTO
         SellBookDTO sellBookDTO = mapToDTO(updatedBook, images);
-        return Optional.of(sellBookDTO);
+//        System.out.print(sellBookDTO);
+        return new Response("Edit Successfully ",true , id);
     } else {
         // Return empty if book is not found
-        return Optional.empty();
+        return new Response("Edit unsuccessfully", false ,iid);
     }
     }
 

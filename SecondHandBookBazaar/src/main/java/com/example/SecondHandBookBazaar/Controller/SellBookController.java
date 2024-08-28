@@ -89,8 +89,8 @@ public class SellBookController {
     }
 
     @PutMapping("/editBook/{id}")
-    public Optional<SellBookDTO> EditBook(@PathVariable ("id") Long id, @RequestBody SellBookEdit sellBookEdit) {
-        Optional<SellBookDTO> book =sellBookService.EditBook(id,sellBookEdit);
+    public Response EditBook(@PathVariable ("id") Long id, @RequestBody SellBookEdit sellBookEdit) {
+        Response book =sellBookService.EditBook(id,sellBookEdit);
         return book;
     }
 

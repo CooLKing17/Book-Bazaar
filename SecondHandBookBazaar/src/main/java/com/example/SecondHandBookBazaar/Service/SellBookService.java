@@ -25,7 +25,7 @@ public interface SellBookService {
 
     public List<SellBookDTO> getUserBookList(Long id);
 
-    public Optional<SellBookDTO> EditBook(Long id , SellBookEdit user );
+    public Response EditBook(Long id , SellBookEdit user );
 
     public Response DeleteBook(Long id);
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Disclosure,
   DisclosureButton,
@@ -11,9 +11,10 @@ import {
 import { Link } from "react-router-dom";
 
 import { useSelector } from "react-redux";
+import { getProfile } from "./Logic and Connection/Logic";
 
 const userID = localStorage.getItem("UserId");
-console.log(userID)
+console.log(userID);
 
 const navigation = [
   {
@@ -39,34 +40,33 @@ const navigation = [
     to: "/",
     current: false,
     icon: "https://cdn-icons-png.flaticon.com/128/3986/3986107.png",
-   Types: [
-  { cata: "Biography/Autobiography/Memoir", to: "/biography" },
-  { cata: "Self-Help", to: "/self-help" },
-  { cata: "Travel", to: "/travel" },
-  { cata: "Cookbooks", to: "/cookbooks" },
-  { cata: "Health/Wellness", to: "/health-wellness" },
-  { cata: "History", to: "/history" },
-  { cata: "Science/Nature", to: "/science-nature" },
-  { cata: "True Crime", to: "/true-crime" },
-  { cata: "Educational", to: "/educational" },
-  { cata: "Literary Fiction", to: "/literary-fiction" },
-  { cata: "Mystery/Thriller/Crime", to: "/mystery-thriller-crime" },
-  { cata: "Science Fiction", to: "/science-fiction" },
-  { cata: "Fantasy", to: "/fantasy" },
-  { cata: "Historical Fiction", to: "/historical-fiction" },
-  { cata: "Romance", to: "/romance" },
-  { cata: "Horror", to: "/horror" },
-  { cata: "Reference", to: "/reference" },
-  { cata: "Poetry", to: "/poetry" },
-  { cata: "Religious/Spiritual", to: "/religious-spiritual" },
-  { cata: "Magazines", to: "/magazines" },
-  { cata: "Zines", to: "/zines" },
-  { cata: "Journal/Notebook", to: "/journal-notebook" },
-  { cata: "Comic Book", to: "/comic-book" },
-  { cata: "Graphic Novel", to: "/graphic-novel" },
-  { cata: "Logic", to: "/logic" },
-]
-
+    Types: [
+      { cata: "Biography/Autobiography/Memoir", to: "/biography" },
+      { cata: "Self-Help", to: "/self-help" },
+      { cata: "Travel", to: "/travel" },
+      { cata: "Cookbooks", to: "/cookbooks" },
+      { cata: "Health/Wellness", to: "/health-wellness" },
+      { cata: "History", to: "/history" },
+      { cata: "Science/Nature", to: "/science-nature" },
+      { cata: "True Crime", to: "/true-crime" },
+      { cata: "Educational", to: "/educational" },
+      { cata: "Literary Fiction", to: "/literary-fiction" },
+      { cata: "Mystery/Thriller/Crime", to: "/mystery-thriller-crime" },
+      { cata: "Science Fiction", to: "/science-fiction" },
+      { cata: "Fantasy", to: "/fantasy" },
+      { cata: "Historical Fiction", to: "/historical-fiction" },
+      { cata: "Romance", to: "/romance" },
+      { cata: "Horror", to: "/horror" },
+      { cata: "Reference", to: "/reference" },
+      { cata: "Poetry", to: "/poetry" },
+      { cata: "Religious/Spiritual", to: "/religious-spiritual" },
+      { cata: "Magazines", to: "/magazines" },
+      { cata: "Zines", to: "/zines" },
+      { cata: "Journal/Notebook", to: "/journal-notebook" },
+      { cata: "Comic Book", to: "/comic-book" },
+      { cata: "Graphic Novel", to: "/graphic-novel" },
+      { cata: "Logic", to: "/logic" },
+    ],
   },
   {
     name: "Cart",
@@ -81,12 +81,23 @@ function classNames(...classes) {
 }
 
 const NavBar = () => {
-
-  const SignOut=()=>{
+  const SignOut = () => {
     localStorage.clear();
-  }
-  
-  const profile = useSelector((store) => store.profile.profileData);
+  };
+  const [isSold, setIssold] = useState(true);
+  const [profile,setprofile]=useState();
+  const profileData = useSelector((store) => store.profile.profileData);
+
+  useEffect(()=>{
+    if(userID && profileData){
+      const fetch = async ()=>{
+        const data = await getProfile(userID);
+        setprofile(data);
+      }
+      setprofile(profileData);
+      fetch();
+    }
+  },[profileData])
   return (
     <Disclosure
       as="nav"
@@ -131,35 +142,39 @@ const NavBar = () => {
                             "rounded-md px-3 py-1 text-sm font-medium flex items-center "
                           )}
                         >
-                          <img className="w-9 pr-1 " alt="icon" src={item.icon} />{" "}
+                          <img
+                            className="w-9 pr-1 "
+                            alt="icon"
+                            src={item.icon}
+                          />{" "}
                           {item.name}
                         </Link>
                       ) : (
-                      <Menu key={item.name} as="div" className="relative">
-                        <MenuButton
-                          className="text-white hover:bg-gray-50 hover:text-red-500 rounded-md px-3 py-2 text-sm font-medium flex items-center"
-                        >
-                          <img className="w-6 h-6 mr-1" alt="categories" src={item.icon} />
-                          {item.name}
-                        </MenuButton>
-                        <MenuItems
-                          className="absolute left-0 z-10 mt-2 w-64 origin-top-right rounded-md shadow-lg bg-gray-400 ring-1 ring-black ring-opacity-5 focus:outline-none"
-                        >
-                          <div className="max-h-64 overflow-y-auto custom-scrollbar">
-                            {item.Types.map((type) => (
-                              <MenuItem key={type.cata}>
-                                <Link
-                                  to={type.to}
-                                  className="block px-4 py-2 text-sm hover:text-red-500 hover:bg-gray-50 "
-                                >
-                                  {type.cata}
-                                </Link>
-                              </MenuItem>
-                            ))}
-                          </div>
-                        </MenuItems>
-                      </Menu>
-                    )
+                        <Menu key={item.name} as="div" className="relative">
+                          <MenuButton className="text-white hover:bg-gray-50 hover:text-red-500 rounded-md px-3 py-2 text-sm font-medium flex items-center">
+                            <img
+                              className="w-6 h-6 mr-1"
+                              alt="categories"
+                              src={item.icon}
+                            />
+                            {item.name}
+                          </MenuButton>
+                          <MenuItems className="absolute left-0 z-10 mt-2 w-64 origin-top-right rounded-md shadow-lg bg-gray-400 ring-1 ring-black ring-opacity-5 focus:outline-none">
+                            <div className="max-h-64 overflow-y-auto custom-scrollbar">
+                              {item.Types.map((type) => (
+                                <MenuItem key={type.cata}>
+                                  <Link
+                                    to={type.to}
+                                    className="block px-4 py-2 text-sm hover:text-red-500 hover:bg-gray-50 "
+                                  >
+                                    {type.cata}
+                                  </Link>
+                                </MenuItem>
+                              ))}
+                            </div>
+                          </MenuItems>
+                        </Menu>
+                      )
                     )}
                   </div>
                 </div>
@@ -189,17 +204,16 @@ const NavBar = () => {
                       <img
                         alt=""
                         src={
-                 profile?.profileimage
-                  ? `data:image/jpeg;base64,${profile.profileimage}`
-                  :"https://cdn-icons-png.flaticon.com/128/1177/1177568.png"
-
-              }
+                          profile?.profileimage
+                            ? `data:image/jpeg;base64,${profile.profileimage}`
+                            : "https://cdn-icons-png.flaticon.com/128/1177/1177568.png"
+                        }
                         className="h-10 w-10 rounded-full"
                       />
                     </MenuButton>
                   </div>
                   <MenuItems
-                   transition
+                    transition
                     className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
                   >
                     <MenuItem>
@@ -213,94 +227,100 @@ const NavBar = () => {
                     <MenuItem>
                       <Link
                         to="/donatesell=page"
+                        state={{ isSold }}
+                        onClick={() => setIssold(false)}
                         className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
                       >
-                           Book Details
+                        Your Book Details
                       </Link>
                     </MenuItem>
                     <MenuItem>
                       <Link
                         to="/donatesell=page"
+                        state={{ isSold }}
+                        onClick={() => setIssold(true)}
                         className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
                       >
                         Donate Book Details
                       </Link>
                     </MenuItem>
-                     {!userID ?
-                    (<MenuItem>
-                    
-                      <Link
-                        to="/signin=signup"
-                        className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
-                      >
-                        Sign in
-                      </Link>
-                    </MenuItem>):(
-                    <MenuItem>
-                      <Link
-                        to="/"
-                        onClick={SignOut}
-                        className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
-                      >
-                        Sign out
-                      </Link>
-                    </MenuItem>)
-                  }
+
+                    {!userID ? (
+                      <MenuItem>
+                        <Link
+                          to="/signin=signup"
+                          className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+                        >
+                          Sign in
+                        </Link>
+                      </MenuItem>
+                    ) : (
+                      <MenuItem>
+                        <Link
+                          to="/"
+                          onClick={SignOut}
+                          className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+                        >
+                          Sign out
+                        </Link>
+                      </MenuItem>
+                    )}
                   </MenuItems>
                 </Menu>
               </div>
             </div>
           </div>
-        <DisclosurePanel className="sm:hidden">
-  <div className="space-y-1 px-2 pb-3 pt-2">
-    {navigation.map((item) =>
-      item.name !== "Buy Now" ? (
-        <Link
-          key={item.name}
-          to={item.to}
-          aria-current={item.current ? "page" : undefined}
-          className={classNames(
-            item.current
-              ? "bg-gray-300 text-white"
-              : "text-white hover:bg-gray-50 hover:text-red-500",
-            "rounded-md px-3 py-2 text-base font-medium flex items-center"
-          )}
-        >
-          <img className="w-9 pr-1" alt="icon" src={item.icon} /> {item.name}
-        </Link>
-      ) : (
-        <Menu key={item.name} as="div" className="relative">
-          <MenuButton
-            className={classNames(
-              "text-white hover:bg-gray-50 hover:text-red-500 rounded-md px-3 py-2 text-base font-medium flex items-center"
-            )}
-          >
-            <img className="w-9 pr-1" alt="buy now" src={item.icon} />
-            {item.name}
-          </MenuButton>
-          <MenuItems
-            transition
-            className="absolute left-32 z-10  w-48 origin-top-right rounded-lg bg-gray-400 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
-          >
-            {item.Types.map((type) => (
-              <MenuItem key={type.cata}>
-                <Link
-                  to={type.to}
-                  className={classNames(
-                    "block px-4 py-2 text-sm rounded-md text-white font-bold hover:text-red-500 data-[focus]:bg-gray-100"
-                  )}
-                >
-                  {type.cata}
-                </Link>
-              </MenuItem>
-            ))}
-          </MenuItems>
-        </Menu>
-      )
-    )}
-  </div>
-</DisclosurePanel>
-</>
+          <DisclosurePanel className="sm:hidden">
+            <div className="space-y-1 px-2 pb-3 pt-2">
+              {navigation.map((item) =>
+                item.name !== "Buy Now" ? (
+                  <Link
+                    key={item.name}
+                    to={item.to}
+                    aria-current={item.current ? "page" : undefined}
+                    className={classNames(
+                      item.current
+                        ? "bg-gray-300 text-white"
+                        : "text-white hover:bg-gray-50 hover:text-red-500",
+                      "rounded-md px-3 py-2 text-base font-medium flex items-center"
+                    )}
+                  >
+                    <img className="w-9 pr-1" alt="icon" src={item.icon} />{" "}
+                    {item.name}
+                  </Link>
+                ) : (
+                  <Menu key={item.name} as="div" className="relative">
+                    <MenuButton
+                      className={classNames(
+                        "text-white hover:bg-gray-50 hover:text-red-500 rounded-md px-3 py-2 text-base font-medium flex items-center"
+                      )}
+                    >
+                      <img className="w-9 pr-1" alt="buy now" src={item.icon} />
+                      {item.name}
+                    </MenuButton>
+                    <MenuItems
+                      transition
+                      className="absolute left-32 z-10  w-48 origin-top-right rounded-lg bg-gray-400 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+                    >
+                      {item.Types.map((type) => (
+                        <MenuItem key={type.cata}>
+                          <Link
+                            to={type.to}
+                            className={classNames(
+                              "block px-4 py-2 text-sm rounded-md text-white font-bold hover:text-red-500 data-[focus]:bg-gray-100"
+                            )}
+                          >
+                            {type.cata}
+                          </Link>
+                        </MenuItem>
+                      ))}
+                    </MenuItems>
+                  </Menu>
+                )
+              )}
+            </div>
+          </DisclosurePanel>
+        </>
       )}
     </Disclosure>
   );

@@ -2,14 +2,14 @@ package com.example.SecondHandBookBazaar.DataTransferObjects;
 
 public class SellBookEdit {
     private String description;
-    private String sellingPrice;
-    private String missingPages;
-    private String quantity;
+    private Long sellingPrice;
+    private Long missingPages;
+    private Long quantity;
     
     
     public SellBookEdit() {
     }
-    public SellBookEdit(String description, String sellingPrice, String missingPages, String quantity) {
+    public SellBookEdit(String description, Long sellingPrice, Long missingPages, Long quantity) {
         this.description = description;
         this.sellingPrice = sellingPrice;
         this.missingPages = missingPages;
@@ -21,22 +21,22 @@ public class SellBookEdit {
     public void setDescription(String description) {
         this.description = description;
     }
-    public String getSellingPrice() {
+    public Long getSellingPrice() {
         return sellingPrice;
     }
-    public void setSellingPrice(String sellingPrice) {
+    public void setSellingPrice(Long sellingPrice) {
         this.sellingPrice = sellingPrice;
     }
-    public String getMissingPages() {
+    public Long getMissingPages() {
         return missingPages;
     }
-    public void setMissingPages(String missingPages) {
+    public void setMissingPages(Long missingPages) {
         this.missingPages = missingPages;
     }
-    public String getQuantity() {
+    public Long getQuantity() {
         return quantity;
     }
-    public void setQuantity(String quantity) {
+    public void setQuantity(Long quantity) {
         this.quantity = quantity;
     }
     

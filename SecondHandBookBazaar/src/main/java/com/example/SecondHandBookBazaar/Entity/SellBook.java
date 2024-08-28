@@ -24,38 +24,23 @@ public class SellBook {
     private String name;
     private String authorName;
     private LocalDate releaseDate;
-    private String rating;
+    private Long rating;
     private String type;
     private String subType;
     private String bookCondition;
     private String oldbookcondition;
-    private String originalPrice;
-    private String sellingPrice;
+    private Long originalPrice;
+    private Long sellingPrice;
     private String edition;  
     private String description;
     private String isbn10;
-    public String getSubType() {
-        return subType;
-    }
-
-    public void setSubType(String subType) {
-        this.subType = subType;
-    }
-
-    public String getCondition() {
-        return oldbookcondition;
-    }
-
-    public void setCondition(String oldbookcondition) {
-        this.oldbookcondition = oldbookcondition;
-    }
-
+   
     private String isbn13;
     private String language;
-    private String missingPages;
-    private String totalPages;
+    private Long missingPages;
+    private Long totalPages;
     private String bookpublisher;
-    private String quantity;
+    private Long quantity;
 
     @ManyToOne
     @JoinColumn(name="User_id")
@@ -63,10 +48,15 @@ public class SellBook {
 
     @OneToMany(mappedBy = "sell",cascade = CascadeType.ALL ,fetch = FetchType.LAZY)
     private List<Image> image= new ArrayList<>();
-	public SellBook(Long id, String name, String authorName, LocalDate releaseDate, String rating, String type,
-			String subType, String bookCondition, String oldbookcondition, String originalPrice, String sellingPrice,
-			String edition, String description, String isbn10, String isbn13, String language, String missingPages,
-			String totalPages, String bookpublisher, String quantity, User user, List<Image> image) {
+	
+	public SellBook() {
+		super();
+	}
+
+	public SellBook(Long id, String name, String authorName, LocalDate releaseDate, Long rating, String type,
+			String subType, String bookCondition, String oldbookcondition, Long originalPrice, Long sellingPrice,
+			String edition, String description, String isbn10, String isbn13, String language, Long missingPages,
+			Long totalPages, String bookpublisher, Long quantity, User user, List<Image> image) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -90,10 +80,6 @@ public class SellBook {
 		this.quantity = quantity;
 		this.user = user;
 		this.image = image;
-	}
-
-	public SellBook() {
-		super();
 	}
 
 	@Override
@@ -139,11 +125,11 @@ public class SellBook {
 		this.releaseDate = releaseDate;
 	}
 
-	public String getRating() {
+	public Long getRating() {
 		return rating;
 	}
 
-	public void setRating(String rating) {
+	public void setRating(Long rating) {
 		this.rating = rating;
 	}
 
@@ -158,6 +144,22 @@ public class SellBook {
 	public String getBookCondition() {
 		return bookCondition;
 	}
+	 public String getSubType() {
+	        return subType;
+	    }
+
+	    public void setSubType(String subType) {
+	        this.subType = subType;
+	    }
+
+	    public String getCondition() {
+	        return oldbookcondition;
+	    }
+
+	    public void setCondition(String oldbookcondition) {
+	        this.oldbookcondition = oldbookcondition;
+	    }
+
 
 	public void setBookCondition(String bookCondition) {
 		this.bookCondition = bookCondition;
@@ -171,19 +173,19 @@ public class SellBook {
 		this.oldbookcondition = oldbookcondition;
 	}
 
-	public String getOriginalPrice() {
+	public Long getOriginalPrice() {
 		return originalPrice;
 	}
 
-	public void setOriginalPrice(String originalPrice) {
+	public void setOriginalPrice(Long originalPrice) {
 		this.originalPrice = originalPrice;
 	}
 
-	public String getSellingPrice() {
+	public Long getSellingPrice() {
 		return sellingPrice;
 	}
 
-	public void setSellingPrice(String sellingPrice) {
+	public void setSellingPrice(Long sellingPrice) {
 		this.sellingPrice = sellingPrice;
 	}
 
@@ -227,19 +229,19 @@ public class SellBook {
 		this.language = language;
 	}
 
-	public String getMissingPages() {
+	public Long getMissingPages() {
 		return missingPages;
 	}
 
-	public void setMissingPages(String missingPages) {
+	public void setMissingPages(Long missingPages) {
 		this.missingPages = missingPages;
 	}
 
-	public String getTotalPages() {
+	public Long getTotalPages() {
 		return totalPages;
 	}
 
-	public void setTotalPages(String totalPages) {
+	public void setTotalPages(Long totalPages) {
 		this.totalPages = totalPages;
 	}
 
@@ -251,11 +253,11 @@ public class SellBook {
 		this.bookpublisher = bookpublisher;
 	}
 
-	public String getQuantity() {
+	public Long getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(String quantity) {
+	public void setQuantity(Long quantity) {
 		this.quantity = quantity;
 	}
 
@@ -274,6 +276,8 @@ public class SellBook {
 	public void setImage(List<Image> image) {
 		this.image = image;
 	}
+
+	
 
     
 }

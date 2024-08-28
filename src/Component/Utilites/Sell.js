@@ -181,7 +181,7 @@ const Sell = () => {
                 Rating
               </label>
               <input
-                type="text"
+                type="number"
                 name="rating"
                 value={formData.rating}
                 onChange={handleInputChange}
@@ -277,7 +277,7 @@ const Sell = () => {
                 Original Price
               </label>
               <input
-                type="text"
+                type="number"
                 name="originalPrice"
                 value={formData.originalPrice}
                 onChange={handleInputChange}
@@ -289,7 +289,7 @@ const Sell = () => {
                 Selling Price
               </label>
               <input
-                type="text"
+                type="number"
                 name="sellingPrice"
                 value={formData.sellingPrice}
                 onChange={handleInputChange}
@@ -361,7 +361,7 @@ const Sell = () => {
                 Missing Pages
               </label>
               <input
-                type="text"
+                type="number"
                 name="missingPages"
                 value={formData.missingPages}
                 onChange={handleInputChange}
@@ -373,7 +373,7 @@ const Sell = () => {
                 Total Pages
               </label>
               <input
-                type="text"
+                type="number"
                 name="totalPages"
                 value={formData.totalPages}
                 onChange={handleInputChange}
@@ -397,7 +397,7 @@ const Sell = () => {
                 Book Quantity
               </label>
               <input
-                type="text"
+                type="number"
                 name="quantity"
                 value={formData.quantity}
                 onChange={handleInputChange}

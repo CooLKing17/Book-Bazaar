@@ -37,17 +37,7 @@ const InfoPage = () => {
             ))}
           </div>
           <div className="text-gray-600 m-2 text-start">
-            <h1 className="font-bold text-lg m-2">Product Details:</h1>
-            <p className="mb-1">ISBN-10: {book?.isbn10}</p>
-            <p className="mb-1">ISBN-13: {book?.isbn13}</p>
-            <p className="mb-1">Language: {book?.language}</p>
-            <p className="mb-1">Page Count: {book?.totalPages}</p>
-            <p className="mb-1">Missing Pages: {book?.missingPages}</p>
-          </div>
-        </div>
-        <div className="w-full lg:w-1/2 p-6 flex flex-col space-y-4">
-          <div>
-            <h1 className="font-bold text-4xl text-gray-800 mb-2">
+          <h1 className="font-bold text-4xl text-gray-800 mb-2">
               {book?.name}
             </h1>
             <h2 className="text-xl text-gray-600 mb-1">
@@ -61,13 +51,21 @@ const InfoPage = () => {
             </h4>
             <h3 className="text-xl text-gray-500 mb-1">
               Reating: {book?.rating}
-            </h3>
+            </h3></div>
+        </div>
+        <div className="w-full lg:w-1/2 p-6 flex flex-col space-y-4">
+          <div>
+           
             <h4 className="text-xl text-gray-500 mb-1">
               Edition: {book?.edition}
             </h4>
             <h4 className="text-xl text-gray-500 mb-1">
+               Type:{" "}
+              {book?.type }
+            </h4>
+            <h4 className="text-xl text-gray-500 mb-1">
               Sub Type:{" "}
-              {book?.description }
+              {book?.subType }
             </h4>
             <h4 className="text-xl text-gray-500 mb-1">
               Book Condition:{" "}
@@ -81,6 +79,12 @@ const InfoPage = () => {
               Sealing Price:{" "}
               {book?.sellingPrice }
             </h4>
+            <h1 className="font-bold text-lg m-2">Product Details:</h1>
+            <p className="mb-1">ISBN-10: {book?.isbn10}</p>
+            <p className="mb-1">ISBN-13: {book?.isbn13}</p>
+            <p className="mb-1">Language: {book?.language}</p>
+            <p className="mb-1">Page Count: {book?.totalPages}</p>
+            <p className="mb-1">Missing Pages: {book?.missingPages}</p>
             <p className="text-lg text-gray-700 leading-relaxed mb-4">
               Description:{" "}
               {book?.description || "Good book for reading  " }
