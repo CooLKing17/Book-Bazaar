@@ -164,6 +164,7 @@ public class sellBookServiceImpl implements SellBookService {
         dto.setSellingPrice(sellBook.getSellingPrice());
         dto.setTotalPages(sellBook.getTotalPages());
         dto.setType(sellBook.getType());
+        
         dto.setBookpublisher(sellBook.getBookpublisher());
         dto.setQuantity(sellBook.getQuantity());
         dto.setUserId(sellBook.getUser().getId());
@@ -229,6 +230,8 @@ public class sellBookServiceImpl implements SellBookService {
         }
         return new Response("Book is not deleted Or Book is not present", false, id);
     }
+
+   
 
 
     

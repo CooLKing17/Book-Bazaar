@@ -84,7 +84,7 @@ public class SellBookController {
     }
 
     @GetMapping("/getBookList/{id}")
-    public List<SellBookDTO> getMethodName(@PathVariable ("id") Long id) {
+    public List<SellBookDTO> UserlistBook(@PathVariable ("id") Long id) {
         return sellBookService.getUserBookList(id);
     }
 
@@ -99,5 +99,7 @@ public class SellBookController {
         Response response = sellBookService.DeleteBook(id);
         return response;
     }
+
+    
     
 }

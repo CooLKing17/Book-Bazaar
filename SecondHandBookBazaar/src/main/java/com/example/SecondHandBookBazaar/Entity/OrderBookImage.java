@@ -1,9 +1,6 @@
 package com.example.SecondHandBookBazaar.Entity;
 
-
-
-import java.sql.Blob;
-
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,46 +10,35 @@ import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 
 @Entity
-public class Image {
+public class OrderBookImage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Lob
-    private Blob image;
-    private String name;
+    @Column(columnDefinition = "LONGBLOB") 
+    private byte[] image;  // Use byte[] for binary data
 
-    @ManyToOne
-    @JoinColumn(name = "sell_id")
-    private SellBook sell;
+    private String name;
     
     @ManyToOne
     @JoinColumn(name = "order_book_id")
     private OrderBook orderBook;
 
-    public Image() {}
+    public OrderBookImage() {}
 
-    public Image(Long id, Blob image, String name, SellBook sell ,OrderBook order) {
+    public OrderBookImage(Long id, byte[] image, String name, OrderBook order) {
         this.id = id;
         this.image = image;
         this.name = name;
-        this.sell = sell;
-        this.orderBook=order;
+        this.orderBook = order;
     }
 
-    public OrderBook getOrderBook() {
-		return orderBook;
-	}
-
-	public void setOrderBook(OrderBook orderBook) {
-		this.orderBook = orderBook;
-	}
-
-	public Long getId() {
+    public Long getId() {
         return id;
     }
 
-    public Blob getImage() {
+    public byte[] getImage() {
         return image;
     }
 
@@ -60,15 +46,15 @@ public class Image {
         return name;
     }
 
-    public SellBook getSell() {
-        return sell;
+    public OrderBook getOrderBook() {
+        return orderBook;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public void setImage(Blob image) {
+    public void setImage(byte[] image) {
         this.image = image;
     }
 
@@ -76,15 +62,12 @@ public class Image {
         this.name = name;
     }
 
-    public void setSell(SellBook sell) {
-
-        this.sell = sell;
+    public void setOrderBook(OrderBook orderBook) {
+        this.orderBook = orderBook;
     }
 
     @Override
     public String toString() {
-        return "Image [id=" + id + ", image=" + image + ", name=" + name + ", sell=" + sell + "]";
+        return "OrderBookImage [id=" + id + ", name=" + name + "]";
     }
-
-
 }

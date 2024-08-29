@@ -1,12 +1,20 @@
 import { motion } from "framer-motion";
+
 import { Link } from "react-router-dom";
+import { addCart } from "../Logic and Connection/Logic3";
 
 const BookList = ({ list }) => {
   console.log(list);
+
+  const addBookCart = async (bookId) => {
+    const data = await addCart(bookId);
+    console.log(data);
+  };
+
   return (
     <>
       {list.map((book) => (
-        <Link to={`/InfoPage=card/${book.id}`} key={book.id} state={{ book }}  className="m-2 w-60">
+        <Link to={`/InfoPage=card/${book.id}`} key={book.id} state={{ book }} className="m-2 w-60">
           <motion.div 
             whileHover={{ scale: 0.8 }} 
             whileTap={{ scale: 0.7 }}
@@ -32,7 +40,10 @@ const BookList = ({ list }) => {
               <p>{book.language}</p>
               <p>{book.sellingPrice}</p>
               <p>{book.rating}</p>
-              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2">
+              <button 
+                onClick={() => addBookCart(book.id)} 
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2"
+              >
                 Add to Cart
               </button>
             </div>
@@ -42,6 +53,5 @@ const BookList = ({ list }) => {
     </>
   );
 };
-
 
 export default BookList;

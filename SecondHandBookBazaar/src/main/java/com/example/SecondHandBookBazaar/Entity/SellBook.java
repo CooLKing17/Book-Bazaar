@@ -31,10 +31,9 @@ public class SellBook {
     private String oldbookcondition;
     private Long originalPrice;
     private Long sellingPrice;
-    private String edition;  
+    private String edition;   
     private String description;
     private String isbn10;
-   
     private String isbn13;
     private String language;
     private Long missingPages;

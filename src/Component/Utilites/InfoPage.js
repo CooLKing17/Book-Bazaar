@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useLocation } from "react-router-dom";
+import { addCart } from "../Logic and Connection/Logic3";
 
 const InfoPage = () => {
   const location = useLocation();
@@ -13,7 +14,10 @@ const InfoPage = () => {
   ];
 
   const [mainImage, setMainImage] = useState(images[0]);
-
+  const addBookCart = async (bookId) => {
+    const data = await addCart(bookId);
+    console.log(data);
+  };
   return (
     <div className="w-full h-auto grid justify-items-center font-serif bg-gray-100 py-8 mt-20">
       <div className="flex flex-col lg:flex-row bg-white w-3/4 lg:w-2/3 h-auto shadow-lg rounded-lg overflow-hidden">
@@ -85,6 +89,7 @@ const InfoPage = () => {
             <p className="mb-1">Language: {book?.language}</p>
             <p className="mb-1">Page Count: {book?.totalPages}</p>
             <p className="mb-1">Missing Pages: {book?.missingPages}</p>
+            <p className="mb-1">Quantity: {book?.quantity}</p>
             <p className="text-lg text-gray-700 leading-relaxed mb-4">
               Description:{" "}
               {book?.description || "Good book for reading  " }
@@ -92,15 +97,11 @@ const InfoPage = () => {
           </div>
 
           <div className="flex flex-col space-y-2 mt-4">
-            <button className="bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded transition">
+            <button onClick={()=>{addBookCart(book.id)}} className="bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded transition">
               Add to Cart
             </button>
-            <button className="bg-green-600 hover:bg-green-800 text-white font-bold py-2 px-4 rounded transition">
-              Buy Now
-            </button>
-            <button className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded transition">
-              Add to Wish List
-            </button>
+            
+            
           </div>
         </div>
       </div>

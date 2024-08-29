@@ -1,50 +1,65 @@
 package com.example.SecondHandBookBazaar.Entity;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 @Entity
 public class OrderBook {
-     @Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
     private Long bookId;
     private String name;
     private String authorName;
     private LocalDate releaseDate;
-    private String rating;
+    private Long rating;
     private String type;
     private String subType;
     private String bookCondition;
     private String oldbookcondition;
-    private String originalPrice;
-    private String sellingPrice;
+    private Long originalPrice;
+    private Long sellingPrice;
     private String edition;  
     private String description;
     private String isbn10;
     private String isbn13;
     private String language;
-    private String missingPages;
-    private String totalPages;
+    private Long missingPages;
+    private Long totalPages;
     private String bookpublisher;
-    private String quantity;
+    private Long quantity;
     private Long bookuserId;
+    private Boolean status;
+    
+    private Long price;  // Add this field
+    private Long qty ;
     @ManyToOne
-    @JoinColumn(name = "User_id")
+    @JoinColumn(name = "user_id")
     private User user;
 
-    public OrderBook() {
-    }
+    @OneToMany(mappedBy = "orderBook",cascade = CascadeType.ALL ,fetch = FetchType.LAZY)
+    private List<OrderBookImage> image= new ArrayList<>();
 
-    public OrderBook(Long id, Long bookId, String name, String authorName, LocalDate releaseDate, String rating,
-            String type, String subType, String bookCondition, String oldbookcondition, String originalPrice,
-            String sellingPrice, String edition, String description, String isbn10, String isbn13, String language,
-            String missingPages, String totalPages, String bookpublisher, String quantity, Long bookuserId, User user) {
+    // Default constructor
+    public OrderBook() {super();}
+
+    // Constructor with all fields, including the new 'price' field
+    public OrderBook(Long id, Long bookId, String name, String authorName, LocalDate releaseDate, Long rating,
+                     String type, String subType, String bookCondition, String oldbookcondition, Long originalPrice,
+                     Long sellingPrice, String edition, String description, String isbn10, String isbn13,
+                     String language, Long missingPages, Long totalPages, String bookpublisher, Long quantity,
+                     Long bookuserId,Boolean status, Long price,Long qty, User user ,List<OrderBookImage> image) {
         this.id = id;
         this.bookId = bookId;
         this.name = name;
@@ -67,9 +82,45 @@ public class OrderBook {
         this.bookpublisher = bookpublisher;
         this.quantity = quantity;
         this.bookuserId = bookuserId;
+        this.price = price; 
+        this.qty=qty;// Initialize the new field
         this.user = user;
+        this.image = image;
+        this.status=status;
     }
 
+    public Boolean getStatus() {
+		return status;
+	}
+
+	public void setStatus(Boolean status) {
+		this.status = status;
+	}
+
+	public List<OrderBookImage> getImage() {
+        return image;
+    }
+
+    public void setImage(List<OrderBookImage> image) {
+        this.image = image;
+    }
+
+    // Getters and setters, including the new 'price' field
+    public Long getPrice() {
+        return price;
+    }
+
+    public Long getQty() {
+		return qty;
+	}
+
+	public void setQty(Long qty) {
+		this.qty = qty;
+	}
+
+	public void setPrice(Long price) {
+        this.price = price;
+    }
     @Override
     public String toString() {
         return "OrderBook [id=" + id + ", bookId=" + bookId + ", name=" + name + ", authorName=" + authorName
@@ -78,7 +129,7 @@ public class OrderBook {
                 + originalPrice + ", sellingPrice=" + sellingPrice + ", edition=" + edition + ", description="
                 + description + ", isbn10=" + isbn10 + ", isbn13=" + isbn13 + ", language=" + language
                 + ", missingPages=" + missingPages + ", totalPages=" + totalPages + ", bookpublisher=" + bookpublisher
-                + ", quantity=" + quantity + ", bookuserId=" + bookuserId + ", user=" + user + "]";
+                + ", quantity=" + quantity + ", bookuserId=" + bookuserId + ", user=" + user + ",status="+status+"]";
     }
 
     public Long getId() {
@@ -121,11 +172,11 @@ public class OrderBook {
         this.releaseDate = releaseDate;
     }
 
-    public String getRating() {
+    public Long getRating() {
         return rating;
     }
 
-    public void setRating(String rating) {
+    public void setRating(Long rating) {
         this.rating = rating;
     }
 
@@ -161,19 +212,19 @@ public class OrderBook {
         this.oldbookcondition = oldbookcondition;
     }
 
-    public String getOriginalPrice() {
+    public Long getOriginalPrice() {
         return originalPrice;
     }
 
-    public void setOriginalPrice(String originalPrice) {
+    public void setOriginalPrice(Long originalPrice) {
         this.originalPrice = originalPrice;
     }
 
-    public String getSellingPrice() {
+    public Long getSellingPrice() {
         return sellingPrice;
     }
 
-    public void setSellingPrice(String sellingPrice) {
+    public void setSellingPrice(Long sellingPrice) {
         this.sellingPrice = sellingPrice;
     }
 
@@ -217,19 +268,19 @@ public class OrderBook {
         this.language = language;
     }
 
-    public String getMissingPages() {
+    public Long getMissingPages() {
         return missingPages;
     }
 
-    public void setMissingPages(String missingPages) {
+    public void setMissingPages(Long missingPages) {
         this.missingPages = missingPages;
     }
 
-    public String getTotalPages() {
+    public Long getTotalPages() {
         return totalPages;
     }
 
-    public void setTotalPages(String totalPages) {
+    public void setTotalPages(Long totalPages) {
         this.totalPages = totalPages;
     }
 
@@ -241,11 +292,11 @@ public class OrderBook {
         this.bookpublisher = bookpublisher;
     }
 
-    public String getQuantity() {
+    public Long getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(String quantity) {
+    public void setQuantity(Long quantity) {
         this.quantity = quantity;
     }
 
