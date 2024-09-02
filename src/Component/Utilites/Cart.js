@@ -1,19 +1,54 @@
 import { useEffect, useState } from "react";
-import { GetOrderData } from "../Logic and Connection/Logic3";
+import { BuyBook, cancelorder, GetOrderData, qty, removecart } from "../Logic and Connection/Logic3";
 
 const Cart = () => {
   const [fbooks, setBooks] = useState([]);
   const [tbooks, setTBooks] = useState([]);
-  
+  const [refresh, setRefresh] = useState(false); // New state to control re-fetch
+
   useEffect(() => {
     const fetch = async () => {
       const response = await GetOrderData();
       console.log(response[0]);
-      setBooks(response[0].orderBookDto);
-      setTBooks(response[1].orderBookDto);
+      if (response && Array.isArray(response)) {
+        setBooks(response[0]?.orderBookDto || []);
+        setTBooks(response[1]?.orderBookDto || []);
+      }
     };
     fetch();
-  }, []);
+  }, [refresh]); // useEffect only runs when `refresh` changes
+
+  const buyNow = async (data) => {
+    const response = await BuyBook(data);
+    console.log(response);
+    setRefresh(!refresh); // Toggle `refresh` to re-run `useEffect`
+  };
+
+  const decrease = async (data) => {
+    const link = "ReduceQty";
+    const res = await qty(link, data);
+    console.log(res);
+    setRefresh(!refresh); // Toggle `refresh` to re-run `useEffect`
+  };
+
+  const increase = async (data) => {
+    const link = "addQty";
+    const res = await qty(link, data);
+    console.log(res);
+    setRefresh(!refresh); // Toggle `refresh` to re-run `useEffect`
+  };
+
+  const remove = async (data) => {
+    const res = await removecart(data);
+    console.log(res);
+    setRefresh(!refresh); // Toggle `refresh` to re-run `useEffect`
+  };
+
+  const cancel = async (data) => {
+    const res = await cancelorder(data);
+    console.log(res);
+    setRefresh(!refresh); // Toggle `refresh` to re-run `useEffect`
+  };
 
   return (
     <div className="mt-20 px-4 m-2 p-4 border-2 border-green-500 rounded-xl">
@@ -40,14 +75,14 @@ const Cart = () => {
             </div>
             <div className="flex flex-col items-end">
               <div className="flex items-center mb-2">
-                <button className="bg-gray-200 px-2 py-1 rounded-l hover:bg-gray-300">-</button>
+                <button onClick={()=>{decrease(book.id)}} className="bg-gray-200 px-2 py-1 rounded-l hover:bg-gray-300">-</button>
                 <p className="px-4">{book.quantity}</p>
-                <button className="bg-gray-200 px-2 py-1 rounded-r hover:bg-gray-300">+</button>
+                <button onClick={()=>{increase(book.id)}} className="bg-gray-200 px-2 py-1 rounded-r hover:bg-gray-300">+</button>
               </div>
-              <button className="bg-yellow-300 hover:bg-yellow-500 text-black font-semibold py-1 px-4 rounded mb-2">
+              <button onClick={()=>{buyNow(book.id)}} className="bg-yellow-300 hover:bg-yellow-500 text-black font-semibold py-1 px-4 rounded mb-2">
                 Buy Now
               </button>
-              <button className="bg-red-500 hover:bg-red-700 text-white font-semibold py-1 px-4 rounded">
+              <button onClick={()=>{remove(book.id)}} className="bg-red-500 hover:bg-red-700 text-white font-semibold py-1 px-4 rounded">
                 Remove 
               </button>
             </div>
@@ -83,7 +118,7 @@ const Cart = () => {
                   <p className="px-4">{book.quantity}</p>
                   <button className="bg-gray-200 px-2 py-1 rounded-r hover:bg-gray-300">+</button>
                 </div>
-                <button className="bg-red-500 hover:bg-red-700 text-white font-semibold py-1 px-4 rounded">
+                <button onClick={()=>{cancel(book.id)}} className="bg-red-500 hover:bg-red-700 text-white font-semibold py-1 px-4 rounded">
                   Cancel Order
                 </button>
               </div>

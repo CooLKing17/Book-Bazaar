@@ -83,6 +83,7 @@ function classNames(...classes) {
 const NavBar = () => {
   const SignOut = () => {
     localStorage.clear();
+    window.location.reload();
   };
   const [isSold, setIssold] = useState(true);
   const [profile,setprofile]=useState();

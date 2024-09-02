@@ -24,3 +24,32 @@ export const GetOrderData=async()=>{
         console.error("Error fetching book details:", error);
     }
 }
+
+export const BuyBook=async(data)=>{
+    console.log(data)
+    const response = await axios.put(`${server}/order/api/buyBook/${data}`)
+    console.log(response.data);
+    return response.data;
+}
+
+export const qty=async(link,id)=>{
+    console.log(link)
+    console.log(id)
+    const response = await axios.put(`${server}/order/api/${link}/${id}`)
+    console.log(response.data);
+    return response.data;
+}
+
+export const removecart=async(data)=>{
+    console.log(data)
+    const response = await axios.delete(`${server}/order/api/remove/${data}`)
+    console.log(response.data);
+    return response.data;
+}
+
+export const cancelorder=async(data)=>{
+    console.log(data)
+    const response = await axios.delete(`${server}/order/api/cancelOrder/${data}`)
+    console.log(response.data);
+    return response.data;
+}

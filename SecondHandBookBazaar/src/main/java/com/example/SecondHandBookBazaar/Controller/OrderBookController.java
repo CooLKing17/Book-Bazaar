@@ -15,7 +15,7 @@ import com.example.SecondHandBookBazaar.Respo.Response;
 import com.example.SecondHandBookBazaar.Service.OrderBookService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+
 
 
 
@@ -40,19 +40,19 @@ public class OrderBookController {
 		return orderBookService.getOrderData(id);
 	}
 
-	@PutMapping("buyBook/{id}")
+	@PutMapping("/buyBook/{id}")
 	public Response putMethodName(@PathVariable("id") Long id) {
 		Response response = orderBookService.buyBook(id);
 		return response;
 	}
 
-	@PutMapping("addQty/{id}")
+	@PutMapping("/addQty/{id}")
 	public Response  addBooksqty(@PathVariable ("id") Long id) {
 		Response response = orderBookService.addQty(id);
 		return response;
 	}
 
-	@PutMapping("ReduceQty/{id}")
+	@PutMapping("/ReduceQty/{id}")
 	public Response ReduceQtyBook(@PathVariable("id") Long id) {
 		Response response = orderBookService.ReduceQty(id);
 		return response;

@@ -166,7 +166,7 @@ public class OrderBookServiceImpl implements OrderBookService {
         orderBook.setLanguage(books.getLanguage());
         orderBook.setMissingPages(books.getMissingPages());
         orderBook.setTotalPages(books.getTotalPages());
-
+        orderBook.setQuantity(books.getQuantity());
         Long imageId = books.getId();
         List<OrderBookImage> images = orderBookImageRepo.findByOrderBookId(imageId);
         List<OrderBookImageDTO> imageDTOs = images.stream().map(this::mapToDTOi).collect(Collectors.toList());
@@ -297,11 +297,16 @@ public Response addQty(Long id) {
 @Override
 public Response ReduceQty(Long Id) {
     Optional<OrderBook> books = orderBookRepo.findById(Id);
+    OrderBook orderBook = books.get();
+
     if (books.isPresent()) {
+    	if(orderBook.getQuantity()>=1) {
         OrderBook book = books.get();
         book.setQuantity(book.getQuantity() - 1);
         orderBookRepo.save(book);
         return new Response("Quantity reduced successfully", true, Id);
+    	}
+    	return new Response("Quantity reduced unsuccessfully", true, Id);
     }
     return null;
 }
@@ -334,6 +339,8 @@ public Response cancelOrder(Long id) {
         if (sellBookOpt.isPresent()) {
             sellBook = sellBookOpt.get();
             sellBook.setQuantity(sellBook.getQuantity() + orderBook.getQuantity());
+            orderBookRepo.delete(orderBook);
+            return new Response("Order cancelled successfully good", true, id);
         } else {
             sellBook = new SellBook();
             Optional<User> userOpt = userRepo.findById(userId);
@@ -381,16 +388,16 @@ public Response cancelOrder(Long id) {
             return image;
         }).collect(Collectors.toList());
         imageRepo.saveAll(images);
-
+        orderBookRepo.delete(orderBook);
+        return new Response("Order cancelled successfully done", true, id);
             } else {
                 return new Response("User not found", false, null);
             }
         }
 
        
+       
         
-        orderBookRepo.delete(orderBook);
-        return new Response("Order cancelled successfully", true, id);
     }
     
     return new Response("Order not found", false, null);
