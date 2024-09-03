@@ -21,7 +21,7 @@ module.exports = {
       },
       backgroundImage:{
         'hero': "url('https://i.makeagif.com/media/8-22-2017/tFTl2R.gif')",
-        'back': "url('/src/Utilities/Image/B1.png')",
+        'back': "url('/src/Utilities/Image/B6.gif')",
         'back2': "url('/src/Utilities/Image/B2.gif')",
         'back3': "url('/src/Utilities/Image/B4.png')",
         'back4': "url('/src/Utilities/Image/B5.png')",

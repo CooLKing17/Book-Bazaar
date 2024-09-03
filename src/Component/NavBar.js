@@ -90,14 +90,16 @@ const NavBar = () => {
   const profileData = useSelector((store) => store.profile.profileData);
 
   useEffect(()=>{
-    if(userID && profileData){
+    // if(userID && profileData){
       const fetch = async ()=>{
         const data = await getProfile(userID);
         setprofile(data);
+        
       }
       setprofile(profileData);
       fetch();
-    }
+    
+    //}
   },[profileData])
   return (
     <Disclosure

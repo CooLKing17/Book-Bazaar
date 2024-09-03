@@ -102,7 +102,7 @@ const Sell = () => {
         "History",
         "Science/Nature",
         "True Crime",
-        "Educational",
+        
       ],
     },
     {
@@ -126,16 +126,17 @@ const Sell = () => {
         "Poetry",
         "Religious/Spiritual",
         "Magazines",
-        "Zines",
+        
       ],
     },
   ];
   const selectedCategory = categories.find((cat) => cat.type === formData.type);
   return (
     <div className="mt-20 px-4 flex justify-center items-center min-h-screen bg-gradient-to-r from-blue-100 to-blue-200">
+     <ToastContainer />
       {userID ? (
         <div className="w-full max-w-lg p-10 bg-white rounded-xl shadow-xl">
-          <ToastContainer />
+         
           <h1 className="text-4xl font-bold text-center text-blue-800 mb-8">
             Sell Book
           </h1>

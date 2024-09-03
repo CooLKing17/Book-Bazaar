@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import { BuyBook, cancelorder, GetOrderData, qty, removecart } from "../Logic and Connection/Logic3";
+import { toast, ToastContainer } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
+  const navigate = useNavigate();
+
   const [fbooks, setBooks] = useState([]);
   const [tbooks, setTBooks] = useState([]);
   const [refresh, setRefresh] = useState(false); // New state to control re-fetch
@@ -21,7 +25,8 @@ const Cart = () => {
   const buyNow = async (data) => {
     const response = await BuyBook(data);
     console.log(response);
-    setRefresh(!refresh); // Toggle `refresh` to re-run `useEffect`
+    setRefresh(!refresh); 
+    toast.success(response.massage)// Toggle `refresh` to re-run `useEffect`
   };
 
   const decrease = async (data) => {
@@ -41,19 +46,23 @@ const Cart = () => {
   const remove = async (data) => {
     const res = await removecart(data);
     console.log(res);
-    setRefresh(!refresh); // Toggle `refresh` to re-run `useEffect`
+    setRefresh(!refresh);
+    toast.success(res.massage)
+    navigate("/") // Toggle `refresh` to re-run `useEffect`
   };
 
   const cancel = async (data) => {
     const res = await cancelorder(data);
     console.log(res);
-    setRefresh(!refresh); // Toggle `refresh` to re-run `useEffect`
+    setRefresh(!refresh);
+    toast.success(res.massage)
+    navigate("/") // Toggle `refresh` to re-run `useEffect`
   };
 
   return (
     <div className="mt-20 px-4 m-2 p-4 border-2 border-green-500 rounded-xl">
       <h1 className="text-2xl font-serif font-bold mb-4 text-center">My Shopping Cart</h1>
-
+      <ToastContainer/>
       {/* First list of books */}
       {fbooks && fbooks.length > 0 ? (
         fbooks.map((book) => (

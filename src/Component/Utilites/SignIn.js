@@ -139,10 +139,12 @@ const SignIn = () => {
 
     if (loginUser.email && loginUser.password) {
       const data = await LoginVerification(loginUser);
+
       const UserId = data.id;
       console.log(UserId)
       localStorage.setItem("UserId",UserId)
       console.log(data);
+      toast.success(data.massage)
       if (data.status) {
         const info = await getProfile(UserId);
         console.log(info);
@@ -164,7 +166,9 @@ const SignIn = () => {
     <>
       {/* Sign in */}
       {isSignIn ? (
-        <div className="flex min-h-screen items-center justify-center bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+        
+        <div className="flex min-h-screen items-center justify-center bg-gradient-to-r from-blue-500 to-indigo-600 py-12 px-4 sm:px-6 lg:px-8">
+        <ToastContainer/>
           <div className="max-w-md w-full bg-white p-8 rounded-lg shadow-md">
             <div className="sm:mx-auto sm:w-full sm:max-w-sm">
               <img
@@ -232,9 +236,10 @@ const SignIn = () => {
                         });
                       }}
                       type="password"
-                      required
+                      
                       autoComplete="current-password"
                       className="block w-full rounded-md border border-gray-300 py-2 px-3 text-gray-900 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                      required
                     />
                   </div>
                 </div>
@@ -262,7 +267,8 @@ const SignIn = () => {
         </div>
       ) : (
         // Sign up
-        <div className="flex min-h-screen items-center justify-center bg-gray-100 py-20 px-4 sm:px-6 lg:px-8">
+        <div className="flex min-h-screen items-center justify-center bg-gradient-to-r from-green-400 to-blue-500 py-20 px-4 sm:px-6 lg:px-8">
+        <ToastContainer className=" w-5 "/>
           <div className="max-w-md w-full bg-white p-8 rounded-lg shadow-md">
             <div>
               <h2 className="text-center text-3xl font-extrabold text-gray-900">
@@ -279,7 +285,7 @@ const SignIn = () => {
               </p>
             </div>
             <form method="post" className="mt-8 space-y-6">
-            <ToastContainer className=" w-5 "/>
+            
               <div className="space-y-4">
               
                 <div>
@@ -421,7 +427,7 @@ const SignIn = () => {
                     onChange={handleData}
                     type="text"
                     required
-                    className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-500 text-gray-900 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    className="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-500 text-gray-900 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     placeholder="State"
                   />
                 </div>
@@ -440,7 +446,7 @@ const SignIn = () => {
                   />
                 </div>
                 <div>
-                  <label htmlFor="uploadimage" className="sr-only">
+                  <label htmlFor="uploadimage" className="block text-sm font-medium text-gray-700">
                     Upload Image
                   </label>
                   <input
@@ -449,7 +455,7 @@ const SignIn = () => {
                     onChange={handleFileChange}
                     type="file"
                     accept="image/*"
-                    className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-500 text-gray-900 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    className="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-indigo-600 file:text-white hover:file:bg-indigo-500"
                   />
                 </div>
                 {user.profileimage && (

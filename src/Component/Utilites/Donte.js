@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { DonateBookData} from "../Logic and Connection/Logic1";
+import { toast, ToastContainer } from "react-toastify";
 
 const Donate = () => {
     const [donateData ,setdonateData]=useState({
@@ -24,10 +25,12 @@ const Donate = () => {
         console.log(donateData);
         const response = await DonateBookData(donateData);
         console.log(response);
+        toast.success(response.massage)
     }
     return (
         <div className="mt-20  px-4 flex justify-center items-center min-h-screen bg-gradient-to-r from-blue-100 to-blue-300">
             <div className="w-full max-w-lg p-10 bg-white rounded-xl shadow-xl">
+            <ToastContainer/>
                 <h1 className="text-4xl font-bold text-center text-blue-800 mb-8">Donate Book</h1>
                 <form>
                     <div className="mb-5">
